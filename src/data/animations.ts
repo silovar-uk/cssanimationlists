@@ -2580,4 +2580,240 @@ export const animations: AnimationItem[] = [
     reducedMotion: `.context-menu-expand ul { transition: none; }`,
     note: 'マウスをホバーすると開きます。',
   },
+
+  // 文字・テキスト
+  {
+    id: 'letter-stagger-in',
+    referenceId: 'CSS-081',
+    title: '文字の時間差登場',
+    description: '1文字ずつ、下から時間差で浮かび上がる見出し。',
+    category: '文字・テキスト',
+    trigger: '一度だけ',
+    tags: ['文字', 'delay', '登場'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<h2 class="letter-stagger-in" aria-label="ANIMATE"><span>A</span><span>N</span><span>I</span><span>M</span><span>A</span><span>T</span><span>E</span></h2>`,
+    css: `.letter-stagger-in { margin: 0; font: 900 34px/1.2 sans-serif; }
+.letter-stagger-in span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: letter-stagger-in .5s ease both;
+}
+.letter-stagger-in span:nth-child(1) { animation-delay: 0s; }
+.letter-stagger-in span:nth-child(2) { animation-delay: .05s; }
+.letter-stagger-in span:nth-child(3) { animation-delay: .1s; }
+.letter-stagger-in span:nth-child(4) { animation-delay: .15s; }
+.letter-stagger-in span:nth-child(5) { animation-delay: .2s; }
+.letter-stagger-in span:nth-child(6) { animation-delay: .25s; }
+.letter-stagger-in span:nth-child(7) { animation-delay: .3s; }
+@keyframes letter-stagger-in { to { opacity: 1; transform: none; } }`,
+    reducedMotion: `.letter-stagger-in span { animation: none; opacity: 1; transform: none; }`,
+  },
+  {
+    id: 'gradient-text',
+    referenceId: 'CSS-082',
+    title: '動くグラデーション文字',
+    description: '色の帯が文字の上を流れ続ける、華やかな見出し。',
+    category: '文字・テキスト',
+    trigger: 'ループ',
+    tags: ['文字', 'グラデーション', 'background'],
+    difficulty: 'かんたん',
+    cost: '注意',
+    html: `<h2 class="gradient-text">GRADIENT</h2>`,
+    css: `.gradient-text {
+  margin: 0;
+  font: 900 36px/1.2 sans-serif;
+  background: linear-gradient(90deg, #7c3aed, #ec4899, #f97316, #7c3aed);
+  background-size: 300% auto;
+  color: transparent;
+  background-clip: text;
+  animation: gradient-text-move 4s linear infinite;
+}
+@keyframes gradient-text-move { to { background-position: -300% 0; } }`,
+    reducedMotion: `.gradient-text { animation: none; }`,
+  },
+  {
+    id: 'number-counter',
+    referenceId: 'CSS-083',
+    title: '数字カウントアップ',
+    description: '@propertyで、数値がなめらかに増えていく。',
+    category: '文字・テキスト',
+    trigger: 'ループ',
+    tags: ['@property', 'カウンター', '数字'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="number-counter"><span class="nc-num"></span> 人が利用中</div>`,
+    css: `@property --count {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+.number-counter { font: 800 24px/1 monospace; }
+.number-counter .nc-num {
+  --count: 0;
+  counter-reset: num var(--count);
+  animation: number-count 2.4s ease-out infinite;
+}
+.number-counter .nc-num::after { content: counter(num); }
+@keyframes number-count {
+  0% { --count: 0; }
+  70%, 100% { --count: 2480; }
+}`,
+    reducedMotion: `.number-counter .nc-num { animation: none; --count: 2480; }`,
+    browserNote: '@property が必要です(Safari 16.4以降)。未対応環境では数値が更新されません。',
+  },
+  {
+    id: 'strikethrough-reveal',
+    referenceId: 'CSS-084',
+    title: '打ち消し線の描画',
+    description: '価格改定などで、横線がすっと引かれる。',
+    category: '文字・テキスト',
+    trigger: '一度だけ',
+    tags: ['打ち消し線', 'delay', '価格'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<p class="strikethrough-reveal">在庫あり <s>¥3,200</s> ¥2,400</p>`,
+    css: `.strikethrough-reveal { margin: 0; font: 700 18px/1.6 sans-serif; }
+.strikethrough-reveal s {
+  position: relative;
+  text-decoration: none;
+  color: #94a3b8;
+}
+.strikethrough-reveal s::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: #ef4444;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: strike-draw .5s .3s ease both;
+}
+@keyframes strike-draw { to { transform: scaleX(1); } }`,
+    reducedMotion: `.strikethrough-reveal s::after { animation: none; transform: scaleX(1); }`,
+  },
+  {
+    id: 'highlight-marker',
+    referenceId: 'CSS-085',
+    title: '蛍光ペンハイライト',
+    description: '重要な語句の背後を、蛍光ペンでなぞるように塗る。',
+    category: '文字・テキスト',
+    trigger: '一度だけ',
+    tags: ['蛍光ペン', 'background', '強調'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<p class="highlight-marker">この部分が<mark>重要なポイント</mark>です。</p>`,
+    css: `.highlight-marker { margin: 0; font-size: 17px; line-height: 1.8; }
+.highlight-marker mark {
+  background: linear-gradient(to right, #fde047 0%, #fde047 100%);
+  background-repeat: no-repeat;
+  background-size: 0% 55%;
+  background-position: 0 88%;
+  color: inherit;
+  animation: highlight-draw .6s .2s ease both;
+}
+@keyframes highlight-draw { to { background-size: 100% 55%; } }`,
+    reducedMotion: `.highlight-marker mark { animation: none; background-size: 100% 55%; }`,
+  },
+  {
+    id: 'text-wave',
+    referenceId: 'CSS-086',
+    title: '文字の波打ち',
+    description: '文字が順番に、波のように上下する。',
+    category: '文字・テキスト',
+    trigger: 'ループ',
+    tags: ['文字', '波', 'delay'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="text-wave" aria-label="WAVING"><span>W</span><span>A</span><span>V</span><span>I</span><span>N</span><span>G</span></div>`,
+    css: `.text-wave { font: 900 32px/1.2 sans-serif; }
+.text-wave span {
+  display: inline-block;
+  animation: text-wave 1.6s ease-in-out infinite;
+}
+.text-wave span:nth-child(1) { animation-delay: 0s; }
+.text-wave span:nth-child(2) { animation-delay: .08s; }
+.text-wave span:nth-child(3) { animation-delay: .16s; }
+.text-wave span:nth-child(4) { animation-delay: .24s; }
+.text-wave span:nth-child(5) { animation-delay: .32s; }
+.text-wave span:nth-child(6) { animation-delay: .4s; }
+@keyframes text-wave {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-12px); }
+}`,
+    reducedMotion: `.text-wave span { animation: none; }`,
+  },
+  {
+    id: 'text-glitch',
+    referenceId: 'CSS-087',
+    title: '文字のグリッチ',
+    description: '赤と青の残像がずれて明滅する、エラー表現向けの文字。',
+    category: '文字・テキスト',
+    trigger: 'ループ',
+    tags: ['グリッチ', 'clip-path', 'エラー'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="text-glitch" data-text="ERROR">ERROR</div>`,
+    css: `.text-glitch {
+  position: relative;
+  font: 900 34px/1.2 monospace;
+  color: #111827;
+}
+.text-glitch::before, .text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+}
+.text-glitch::before {
+  color: #ef4444;
+  animation: glitch-1 2.4s infinite linear;
+}
+.text-glitch::after {
+  color: #06b6d4;
+  animation: glitch-2 2.4s infinite linear;
+}
+@keyframes glitch-1 {
+  0%, 92%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  93% { clip-path: inset(20% 0 40% 0); transform: translate(-3px, 1px); }
+  95% { clip-path: inset(60% 0 10% 0); transform: translate(3px, -1px); }
+  97% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 0); }
+}
+@keyframes glitch-2 {
+  0%, 92%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  93% { clip-path: inset(40% 0 30% 0); transform: translate(3px, -1px); }
+  95% { clip-path: inset(15% 0 55% 0); transform: translate(-3px, 1px); }
+  97% { clip-path: inset(65% 0 5% 0); transform: translate(2px, 0); }
+}`,
+    reducedMotion: `.text-glitch::before, .text-glitch::after { animation: none; clip-path: inset(100% 0 0 0); }`,
+    note: 'data-text属性に本文と同じテキストを指定してください。',
+  },
+  {
+    id: 'text-bounce-in',
+    referenceId: 'CSS-088',
+    title: '文字の弾む登場',
+    description: '文字が1つずつ、弾みながら上から落ちてくる。',
+    category: '文字・テキスト',
+    trigger: '一度だけ',
+    tags: ['文字', 'bounce', '登場'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<h2 class="text-bounce-in" aria-label="HELLO"><span>H</span><span>E</span><span>L</span><span>L</span><span>O</span></h2>`,
+    css: `.text-bounce-in { margin: 0; font: 900 38px/1.2 sans-serif; }
+.text-bounce-in span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: text-bounce-in .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+.text-bounce-in span:nth-child(1) { animation-delay: 0s; }
+.text-bounce-in span:nth-child(2) { animation-delay: .06s; }
+.text-bounce-in span:nth-child(3) { animation-delay: .12s; }
+.text-bounce-in span:nth-child(4) { animation-delay: .18s; }
+.text-bounce-in span:nth-child(5) { animation-delay: .24s; }
+@keyframes text-bounce-in { to { opacity: 1; transform: none; } }`,
+    reducedMotion: `.text-bounce-in span { animation: none; opacity: 1; transform: none; }`,
+  },
 ]
