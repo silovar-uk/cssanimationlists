@@ -136,7 +136,7 @@ export function AnimationModal({
         <div className="detail-layout">
           <div className="detail-preview-column">
             <AnimationStage
-              kind={item.preview}
+              item={item}
               paused={paused}
               speed={speed}
               theme={theme}

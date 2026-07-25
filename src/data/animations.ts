@@ -11,7 +11,6 @@ export const animations: AnimationItem[] = [
     tags: ['ループ', 'transform', 'ボール'],
     difficulty: 'かんたん',
     cost: '軽い',
-    preview: 'bounce-ball',
     html: `<div class="bounce-ball"></div>`,
     css: `.bounce-ball {
   width: 48px;
@@ -38,7 +37,6 @@ export const animations: AnimationItem[] = [
     tags: ['ループ', 'scale', '通知'],
     difficulty: 'かんたん',
     cost: '軽い',
-    preview: 'pulse-ring',
     html: `<span class="pulse-dot"></span>`,
     css: `.pulse-dot {
   position: relative;
@@ -72,7 +70,6 @@ export const animations: AnimationItem[] = [
     tags: ['ループ', '回転', 'ドット'],
     difficulty: 'ふつう',
     cost: '軽い',
-    preview: 'orbit-dots',
     html: `<div class="orbit"><i></i><i></i><i></i></div>`,
     css: `.orbit {
   position: relative;
@@ -108,7 +105,6 @@ export const animations: AnimationItem[] = [
     tags: ['ループ', 'カード', '影'],
     difficulty: 'かんたん',
     cost: '軽い',
-    preview: 'floating-card',
     html: `<article class="floating-card">HELLO</article>`,
     css: `.floating-card {
   padding: 28px 38px;
@@ -133,7 +129,6 @@ export const animations: AnimationItem[] = [
     tags: ['steps', '文字', 'カーソル'],
     difficulty: 'ふつう',
     cost: '注意',
-    preview: 'typing-text',
     html: `<p class="typing">CSS makes motion.</p>`,
     css: `.typing {
   width: 18ch;
@@ -160,7 +155,6 @@ export const animations: AnimationItem[] = [
     tags: ['グラデーション', '文字', 'ループ'],
     difficulty: 'かんたん',
     cost: '注意',
-    preview: 'shimmer-text',
     html: `<strong class="shimmer">SHIMMER</strong>`,
     css: `.shimmer {
   color: transparent;
@@ -184,7 +178,6 @@ export const animations: AnimationItem[] = [
     tags: ['delay', '文章', '登場'],
     difficulty: 'ふつう',
     cost: '軽い',
-    preview: 'reveal-lines',
     html: `<div class="reveal-lines">
   <span>Make it clear.</span>
   <span>Make it move.</span>
@@ -214,7 +207,6 @@ export const animations: AnimationItem[] = [
     tags: ['3D', 'カード', 'hover'],
     difficulty: 'しっかり',
     cost: '軽い',
-    preview: 'flip-card',
     html: `<div class="flip-card">
   <div class="flip-inner">
     <div class="flip-front">FRONT</div>
@@ -252,7 +244,6 @@ export const animations: AnimationItem[] = [
     tags: ['ボタン', 'scale', '反応'],
     difficulty: 'ふつう',
     cost: '軽い',
-    preview: 'jelly-button',
     html: `<button class="jelly-button">CLICK</button>`,
     css: `.jelly-button {
   border: 0;
@@ -283,7 +274,6 @@ export const animations: AnimationItem[] = [
     tags: ['ボタン', '波紋', '疑似要素'],
     difficulty: 'ふつう',
     cost: '軽い',
-    preview: 'ripple-button',
     html: `<button class="ripple-button">SEND</button>`,
     css: `.ripple-button {
   position: relative;
@@ -319,7 +309,6 @@ export const animations: AnimationItem[] = [
     tags: ['ローダー', 'delay', 'バー'],
     difficulty: 'かんたん',
     cost: '注意',
-    preview: 'loader-bars',
     html: `<div class="loader-bars"><i></i><i></i><i></i><i></i><i></i></div>`,
     css: `.loader-bars { display: flex; gap: 7px; align-items: center; height: 70px; }
 .loader-bars i {
@@ -346,7 +335,6 @@ export const animations: AnimationItem[] = [
     tags: ['回転', 'border', 'ローダー'],
     difficulty: 'かんたん',
     cost: '軽い',
-    preview: 'spinner',
     html: `<div class="spinner"></div>`,
     css: `.spinner {
   width: 58px;
@@ -369,7 +357,6 @@ export const animations: AnimationItem[] = [
     tags: ['背景', 'グラデーション', 'ループ'],
     difficulty: 'かんたん',
     cost: '注意',
-    preview: 'gradient-wave',
     html: `<div class="gradient-wave"></div>`,
     css: `.gradient-wave {
   width: 180px;
@@ -395,7 +382,6 @@ export const animations: AnimationItem[] = [
     tags: ['紙吹雪', 'delay', '祝福'],
     difficulty: 'しっかり',
     cost: '軽い',
-    preview: 'confetti',
     html: `<div class="confetti"><i></i><i></i><i></i><i></i><i></i><i></i></div>`,
     css: `.confetti { position: relative; width: 180px; height: 120px; overflow: hidden; }
 .confetti i {
@@ -423,7 +409,6 @@ export const animations: AnimationItem[] = [
     tags: ['通知', '回転', 'アイコン'],
     difficulty: 'ふつう',
     cost: '軽い',
-    preview: 'notification-bell',
     html: `<div class="bell">🔔<b>3</b></div>`,
     css: `.bell {
   position: relative;
@@ -453,7 +438,6 @@ export const animations: AnimationItem[] = [
     tags: ['UI', 'グラデーション', '読み込み'],
     difficulty: 'ふつう',
     cost: '注意',
-    preview: 'skeleton',
     html: `<div class="skeleton"><i></i><span></span><span></span></div>`,
     css: `.skeleton > * {
   display: block;
@@ -477,7 +461,6 @@ export const animations: AnimationItem[] = [
     tags: ['文字', 'ループ', '横移動'],
     difficulty: 'ふつう',
     cost: '軽い',
-    preview: 'marquee',
     html: `<div class="marquee"><div>CSS MOTION · CSS MOTION · CSS MOTION ·</div></div>`,
     css: `.marquee {
   width: 230px;
@@ -504,7 +487,6 @@ export const animations: AnimationItem[] = [
     tags: ['border-radius', '変形', '背景'],
     difficulty: 'ふつう',
     cost: '注意',
-    preview: 'blob',
     html: `<div class="blob"></div>`,
     css: `.blob {
   width: 125px;
@@ -528,7 +510,6 @@ export const animations: AnimationItem[] = [
     tags: ['SVG風', '完了', '線'],
     difficulty: 'しっかり',
     cost: '軽い',
-    preview: 'checkbox',
     html: `<div class="checkmark"><span></span></div>`,
     css: `.checkmark {
   width: 72px;
@@ -561,7 +542,6 @@ export const animations: AnimationItem[] = [
     tags: ['scale', 'アイコン', 'ループ'],
     difficulty: 'かんたん',
     cost: '軽い',
-    preview: 'heartbeat',
     html: `<div class="heartbeat">♥</div>`,
     css: `.heartbeat {
   color: #e11d48;

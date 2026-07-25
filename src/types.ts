@@ -17,28 +17,6 @@ export type Difficulty = 'かんたん' | 'ふつう' | 'しっかり'
 /** 軽い = transform / opacity / filter のみで動く。注意 = レイアウトや塗りの再計算を伴う */
 export type Cost = '軽い' | '注意'
 
-export type PreviewKind =
-  | 'bounce-ball'
-  | 'pulse-ring'
-  | 'orbit-dots'
-  | 'floating-card'
-  | 'typing-text'
-  | 'shimmer-text'
-  | 'reveal-lines'
-  | 'flip-card'
-  | 'jelly-button'
-  | 'ripple-button'
-  | 'loader-bars'
-  | 'spinner'
-  | 'gradient-wave'
-  | 'confetti'
-  | 'notification-bell'
-  | 'skeleton'
-  | 'marquee'
-  | 'blob'
-  | 'checkbox'
-  | 'heartbeat'
-
 export interface AnimationItem {
   id: string
   referenceId: string
@@ -49,7 +27,6 @@ export interface AnimationItem {
   tags: string[]
   difficulty: Difficulty
   cost: Cost
-  preview: PreviewKind
   html: string
   css: string
   /** prefers-reduced-motion: reduce のときにコピー用コードへ連結する代替スタイル */
