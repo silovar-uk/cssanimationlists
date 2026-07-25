@@ -3052,4 +3052,291 @@ export const animations: AnimationItem[] = [
 }`,
     reducedMotion: `.particle-float i { animation: none; opacity: 0; }`,
   },
+
+  // スクロール連動
+  {
+    id: 'scroll-progress-bar',
+    referenceId: 'CSS-097',
+    title: '読み進み度バー',
+    description: 'スクロール量に応じて、上部のバーがそのまま伸びる。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', '進捗', 'scroll-timeline'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="spf-scroll">
+  <div class="spf-bar"></div>
+  <div class="spf-content"><p>スクロールすると、上部のバーが読み進み度に合わせて伸びます。ここは十分な高さのダミーテキストです。さらにスクロールしてください。続きます。まだまだ続きます。もうすぐ終わりです。ここまで読んでいただきありがとうございます。</p></div>
+</div>`,
+    css: `.spf-scroll {
+  height: 160px;
+  overflow-y: auto;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  scroll-timeline: --progress block;
+}
+.spf-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 4px;
+  background: #2563eb;
+  transform-origin: left;
+  animation: spf-progress linear;
+  animation-timeline: --progress;
+}
+.spf-content { min-height: 320px; padding: 14px; font-size: 13px; line-height: 1.8; color: #334155; }
+@keyframes spf-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}`,
+    reducedMotion: `.spf-bar { animation: none; transform: scaleX(1); }`,
+    note: '枠内でスクロールすると動作を確認できます。',
+    browserNote: 'animation-timelineはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版では動きません。代替にはIntersectionObserverでスクロール位置を計算し、JavaScriptでバーの幅を更新する実装が必要です。',
+  },
+  {
+    id: 'scroll-fade-in',
+    referenceId: 'CSS-098',
+    title: 'スクロール連動フェードイン',
+    description: '要素が視界に入るタイミングに合わせて、ふわっと現れる。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', 'view()', '登場'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="view-fade-scroll">
+  <div class="vf-spacer">↓ スクロールしてください ↓</div>
+  <div class="vf-target">ふわっと現れます</div>
+  <div class="vf-spacer-bottom"></div>
+</div>`,
+    css: `.view-fade-scroll { height: 160px; overflow-y: auto; border-radius: 14px; border: 1px solid #e5e7eb; }
+.vf-spacer { display: grid; place-items: center; height: 140px; color: #94a3b8; font-size: 12px; font-weight: 700; }
+.vf-spacer-bottom { height: 140px; }
+.vf-target {
+  margin: 0 20px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-weight: 800;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: vf-reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+@keyframes vf-reveal { to { opacity: 1; transform: none; } }`,
+    reducedMotion: `.vf-target { animation: none; opacity: 1; transform: none; }`,
+    note: '枠内でスクロールし、カードが現れる際の動きを確認してください。',
+    browserNote: 'view()タイムラインはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版では動きません。代替にはIntersectionObserverでクラスを付け替える実装が必要です。',
+  },
+  {
+    id: 'parallax-scroll',
+    referenceId: 'CSS-099',
+    title: 'パララックス背景',
+    description: 'スクロールに連動して、背景がゆっくり流れる奥行き表現。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', 'パララックス', 'scroll-timeline'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="parallax-scroll">
+  <div class="ps-bg"></div>
+  <div class="ps-content"><p>手前の文章より、背景の方がゆっくり動くことで奥行きが生まれます。スクロールして確認してください。まだ続きます。もう少しです。</p></div>
+</div>`,
+    css: `.parallax-scroll { position: relative; height: 160px; overflow-y: auto; border-radius: 14px; scroll-timeline: --ps block; }
+.ps-bg {
+  position: sticky;
+  top: 0;
+  height: 160px;
+  margin-bottom: -160px;
+  background: linear-gradient(160deg, #a78bfa, #60a5fa, #34d399);
+  background-size: 100% 260%;
+  animation: ps-move linear;
+  animation-timeline: --ps;
+}
+.ps-content { position: relative; padding: 170px 18px 30px; color: white; font-weight: 700; font-size: 13px; line-height: 1.8; text-shadow: 0 1px 4px rgb(0 0 0 / 35%); }
+@keyframes ps-move { to { background-position: 0 100%; } }`,
+    reducedMotion: `.ps-bg { animation: none; }`,
+    note: '枠内でスクロールすると背景がゆっくり変化します。',
+    browserNote: 'animation-timelineはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版では背景が固定されたまま表示されます。',
+  },
+  {
+    id: 'scroll-rotate-icon',
+    referenceId: 'CSS-100',
+    title: 'スクロール連動回転アイコン',
+    description: 'スクロール量に正確に比例して、アイコンが回転する。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', '回転', '装飾'],
+    difficulty: 'しっかり',
+    cost: '軽い',
+    html: `<div class="scroll-rotate-frame">
+  <div class="sr-icon">⚙</div>
+  <div class="sr-content"><p>スクロールすると歯車がゆっくり回転します。上部に固定されたアイコンをご覧ください。まだ続きます。もう少しでスクロールの終わりです。</p></div>
+</div>`,
+    css: `.scroll-rotate-frame { position: relative; height: 160px; overflow-y: auto; border-radius: 14px; border: 1px solid #e5e7eb; scroll-timeline: --sr block; }
+.sr-icon {
+  position: sticky;
+  top: 14px;
+  left: 14px;
+  width: 40px;
+  aspect-ratio: 1;
+  margin: 0 0 -40px 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #111827;
+  color: #facc15;
+  font-size: 20px;
+  animation: sr-spin linear;
+  animation-timeline: --sr;
+}
+.sr-content { min-height: 280px; padding: 60px 18px 24px; font-size: 13px; line-height: 1.8; color: #334155; }
+@keyframes sr-spin { to { transform: rotate(360deg); } }`,
+    reducedMotion: `.sr-icon { animation: none; }`,
+    note: '枠内でスクロールすると歯車が回転します。',
+    browserNote: 'animation-timelineはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版では回転しません。',
+  },
+  {
+    id: 'sticky-header-shrink',
+    referenceId: 'CSS-101',
+    title: '固定ヘッダーの縮小',
+    description: 'スクロールするほど、上部の見出しが小さく折りたたまれる。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', 'ヘッダー', 'sticky'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="sticky-shrink-frame">
+  <header class="ss-header">見出し</header>
+  <div class="ss-content"><p>スクロールすると、上部のヘッダーが縮みます。ここはダミーの本文です。もう少し続きます。スクロールを続けてください。まもなく終わりです。</p></div>
+</div>`,
+    css: `.sticky-shrink-frame { height: 160px; overflow-y: auto; border-radius: 14px; border: 1px solid #e5e7eb; scroll-timeline: --ssh block; }
+.ss-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 52px;
+  background: #111827;
+  color: white;
+  font-weight: 800;
+  font-size: 18px;
+  animation: ss-shrink linear;
+  animation-timeline: --ssh;
+  animation-range: 0% 30%;
+}
+.ss-content { min-height: 280px; padding: 16px; font-size: 13px; line-height: 1.8; color: #334155; }
+@keyframes ss-shrink { to { height: 34px; font-size: 13px; } }`,
+    reducedMotion: `.ss-header { animation: none; }`,
+    note: '枠内でスクロールするとヘッダーが縮みます。',
+    browserNote: 'animation-timelineはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版ではヘッダーが縮みません。',
+  },
+  {
+    id: 'scroll-scale-image',
+    referenceId: 'CSS-102',
+    title: 'スクロール連動スケール',
+    description: '画面中央に近づくにつれて、要素が拡大する。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', 'view()', 'scale'],
+    difficulty: 'しっかり',
+    cost: '軽い',
+    html: `<div class="scroll-scale-frame">
+  <div class="ssi-spacer">↓ スクロール ↓</div>
+  <div class="ssi-image">IMAGE</div>
+  <div class="ssi-spacer-bottom"></div>
+</div>`,
+    css: `.scroll-scale-frame { height: 160px; overflow-y: auto; border-radius: 14px; border: 1px solid #e5e7eb; }
+.ssi-spacer { display: grid; place-items: center; height: 130px; color: #94a3b8; font-size: 12px; font-weight: 700; }
+.ssi-spacer-bottom { height: 130px; }
+.ssi-image {
+  margin: 0 30px;
+  height: 90px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fb7185, #f97316);
+  color: white;
+  font-weight: 900;
+  transform: scale(.7);
+  animation: ssi-scale linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 50%;
+}
+@keyframes ssi-scale { to { transform: scale(1); } }`,
+    reducedMotion: `.ssi-image { animation: none; transform: scale(1); }`,
+    note: '枠内でスクロールすると画像が中央に近づくにつれて拡大します。',
+    browserNote: 'view()タイムラインはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版では拡大しません。',
+  },
+  {
+    id: 'horizontal-scroll-reveal',
+    referenceId: 'CSS-103',
+    title: '横スクロール連動の強調',
+    description: '横にスクロールすると、中央に近いカードが強調される。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', '横スクロール', 'view()'],
+    difficulty: 'しっかり',
+    cost: '軽い',
+    html: `<div class="h-scroll-reveal">
+  <div class="hsr-track">
+    <div class="hsr-card">01</div>
+    <div class="hsr-card">02</div>
+    <div class="hsr-card">03</div>
+    <div class="hsr-card">04</div>
+  </div>
+</div>`,
+    css: `.h-scroll-reveal { width: 240px; height: 120px; overflow-x: auto; overflow-y: hidden; border-radius: 14px; border: 1px solid #e5e7eb; scroll-timeline: --hsr x; }
+.hsr-track { display: flex; gap: 14px; height: 100%; padding: 14px; width: max-content; }
+.hsr-card {
+  width: 90px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-weight: 900;
+  font-size: 20px;
+  opacity: .3;
+  transform: scale(.85);
+  animation: hsr-reveal linear both;
+  animation-timeline: view(x);
+  animation-range: entry 20% cover 50%;
+}
+@keyframes hsr-reveal { to { opacity: 1; transform: scale(1); } }`,
+    reducedMotion: `.hsr-card { animation: none; opacity: 1; transform: scale(1); }`,
+    note: '横方向にスクロールすると、中央に近いカードが強調されます。',
+    browserNote: 'animation-timelineの横方向(x軸)対応はChrome/Edge 115以降です。Safari・Firefoxの現行版では常に等倍で表示されます。',
+  },
+  {
+    id: 'scroll-color-shift',
+    referenceId: 'CSS-104',
+    title: 'スクロール連動の背景色変化',
+    description: 'スクロール位置に応じて、背景色が段階的に移り変わる。',
+    category: 'スクロール連動',
+    trigger: 'スクロール',
+    tags: ['animation-timeline', '背景色', 'セクション'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="scroll-color-shift">
+  <div class="scs-content"><p>スクロールすると背景色が段階的に変化します。ここはダミーの本文です。続きます。もう少しでセクションが変わります。ここまでで完了です。</p></div>
+</div>`,
+    css: `.scroll-color-shift { height: 160px; overflow-y: auto; border-radius: 14px; scroll-timeline: --scs block; animation: scs-bg linear; animation-timeline: --scs; }
+.scs-content { min-height: 320px; padding: 18px; font-weight: 700; font-size: 13px; line-height: 1.8; color: white; }
+@keyframes scs-bg {
+  0% { background-color: #4338ca; }
+  50% { background-color: #0f766e; }
+  100% { background-color: #b45309; }
+}`,
+    reducedMotion: `.scroll-color-shift { animation: none; background-color: #4338ca; }`,
+    note: '枠内でスクロールすると背景色が変化します。',
+    browserNote: 'animation-timelineはChrome/Edge 115以降で対応しています。Safari・Firefoxの現行版では背景色が固定表示になります。',
+  },
 ]
