@@ -841,4 +841,303 @@ export const animations: AnimationItem[] = [
 @keyframes swipe-dismiss { to { opacity: 0; transform: translateX(90px) rotate(4deg); } }`,
     reducedMotion: `.swipe-dismiss { animation: none; }`,
   },
+
+  // ローディング・進捗
+  {
+    id: 'dot-pulse',
+    referenceId: 'CSS-032',
+    title: '3点ドット',
+    description: '3つの点が順番に膨らむ、最小構成の読み込み表示。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['ドット', 'ローダー', 'ループ'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="dot-pulse"><i></i><i></i><i></i></div>`,
+    css: `.dot-pulse { display: flex; gap: 8px; }
+.dot-pulse i {
+  width: 12px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #2563eb;
+  animation: dot-pulse 1.2s ease-in-out infinite;
+}
+.dot-pulse i:nth-child(2) { animation-delay: .15s; }
+.dot-pulse i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot-pulse {
+  0%, 80%, 100% { transform: scale(.6); opacity: .4; }
+  40% { transform: scale(1); opacity: 1; }
+}`,
+    reducedMotion: `.dot-pulse i { animation: none; opacity: 1; transform: scale(1); }`,
+  },
+  {
+    id: 'progress-indeterminate',
+    referenceId: 'CSS-033',
+    title: '進捗バー(不定)',
+    description: '完了時間が読めない処理向けの、流れ続けるバー。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['進捗', 'バー', 'ループ'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="progress-indeterminate"><span></span></div>`,
+    css: `.progress-indeterminate {
+  width: 220px;
+  height: 10px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+.progress-indeterminate span {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: 999px;
+  background: #2563eb;
+  animation: progress-indeterminate 1.4s ease-in-out infinite;
+}
+@keyframes progress-indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}`,
+    reducedMotion: `.progress-indeterminate span { animation: none; transform: translateX(0); }`,
+  },
+  {
+    id: 'progress-determinate',
+    referenceId: 'CSS-034',
+    title: '進捗バー(確定・数値連動)',
+    description: '@propertyでバーの伸長と数値カウントを同期させる進捗表示。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['@property', '進捗', 'カウンター'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="progress-determinate"><div class="bar"><i></i></div><span class="num"></span></div>`,
+    css: `@property --pct {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+.progress-determinate { width: 220px; }
+.progress-determinate .bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+.progress-determinate .bar i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #16a34a;
+  animation: progress-fill 2.6s ease-out infinite;
+}
+.progress-determinate .num {
+  --pct: 0;
+  display: block;
+  margin-top: 8px;
+  font: 800 13px/1 monospace;
+  counter-reset: pct var(--pct);
+  animation: progress-count 2.6s ease-out infinite;
+}
+.progress-determinate .num::after { content: counter(pct) '%'; }
+@keyframes progress-fill {
+  0% { width: 0%; }
+  70%, 100% { width: 82%; }
+}
+@keyframes progress-count {
+  0% { --pct: 0; }
+  70%, 100% { --pct: 82; }
+}`,
+    reducedMotion: `.progress-determinate .bar i { animation: none; width: 82%; } .progress-determinate .num { animation: none; --pct: 82; }`,
+    browserNote: '@property はSafari 16.4以降、Chrome/Edge 85以降、Firefox 128以降で対応しています。未対応環境では数値が更新されず、バーの伸長のみ表示されます。',
+  },
+  {
+    id: 'circular-progress',
+    referenceId: 'CSS-035',
+    title: '円形プログレス',
+    description: 'conic-gradientと@propertyで描く、なめらかな円形の進捗。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['@property', 'conic-gradient', '円形'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="circular-progress"><span>68%</span></div>`,
+    css: `@property --value {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+.circular-progress {
+  --value: 68;
+  width: 96px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(#2563eb calc(var(--value) * 1%), #e5e7eb 0);
+  animation: circular-progress 2.2s ease-out infinite;
+}
+.circular-progress span {
+  width: 74px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: white;
+  display: grid;
+  place-items: center;
+  font: 800 15px/1 sans-serif;
+}
+@keyframes circular-progress { from { --value: 0; } }`,
+    reducedMotion: `.circular-progress { animation: none; }`,
+    note: '中央の数値はデモ用の固定表示です。実装では値の変化に合わせてJavaScriptでテキストも更新してください。',
+    browserNote: '@property が必要です(Safari 16.4以降)。未対応環境では色の変化が段階的になります。',
+  },
+  {
+    id: 'skeleton-card',
+    referenceId: 'CSS-036',
+    title: 'スケルトンカード',
+    description: '画像とテキストを含むカード全体のプレースホルダー。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['スケルトン', 'カード', 'グラデーション'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="skeleton-card">
+  <i></i>
+  <div>
+    <span class="sk-title"></span>
+    <span class="sk-line"></span>
+    <span class="sk-line short"></span>
+  </div>
+</div>`,
+    css: `.skeleton-card {
+  width: 240px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+.skeleton-card i {
+  display: block;
+  width: 100%;
+  height: 96px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+.skeleton-card i, .skeleton-card span {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f8fafc 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s linear infinite;
+}
+.skeleton-card span { display: block; height: 11px; border-radius: 6px; margin-top: 8px; }
+.skeleton-card .sk-title { height: 14px; width: 70%; }
+.skeleton-card .sk-line.short { width: 45%; }
+@keyframes skeleton-shimmer { to { background-position: -200% 0; } }`,
+    reducedMotion: `.skeleton-card i, .skeleton-card span { animation: none; }`,
+  },
+  {
+    id: 'button-loading',
+    referenceId: 'CSS-037',
+    title: 'ボタン内スピナー',
+    description: '送信中であることを、ボタン自体の状態として示す。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['ボタン', 'スピナー', '送信中'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="btn-loading" disabled><i></i>送信中</button>`,
+    css: `.btn-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: #94a3b8;
+  color: white;
+  font-weight: 800;
+  cursor: not-allowed;
+}
+.btn-loading i {
+  width: 16px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2.5px solid rgb(255 255 255 / 35%);
+  border-top-color: white;
+  animation: btn-spin .7s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(1turn); } }`,
+    reducedMotion: `.btn-loading i { animation: none; }`,
+  },
+  {
+    id: 'step-indicator',
+    referenceId: 'CSS-038',
+    title: '段階的ステップインジケーター',
+    description: '現在地の丸だけが呼吸するように脈打つ進行状況表示。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['ステップ', '進捗', 'box-shadow'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="step-indicator">
+  <i class="is-done"></i>
+  <em></em>
+  <i class="is-current"></i>
+  <em></em>
+  <i></i>
+</div>`,
+    css: `.step-indicator { display: flex; align-items: center; }
+.step-indicator i {
+  width: 26px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  background: white;
+}
+.step-indicator i.is-done { background: #16a34a; border-color: #16a34a; }
+.step-indicator i.is-current {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0 rgb(37 99 235 / 45%);
+  animation: step-pulse 1.6s ease-out infinite;
+}
+.step-indicator em { width: 34px; height: 2px; background: #cbd5e1; }
+@keyframes step-pulse { to { box-shadow: 0 0 0 8px rgb(37 99 235 / 0%); } }`,
+    reducedMotion: `.step-indicator i.is-current { animation: none; box-shadow: none; }`,
+  },
+  {
+    id: 'pull-refresh',
+    referenceId: 'CSS-039',
+    title: 'プルトゥリフレッシュ',
+    description: '引っ張って更新する操作を、矢印の反復で示唆する。',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
+    tags: ['アイコン', '更新', '回転'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="pull-refresh"><i>↓</i>引っ張って更新</div>`,
+    css: `.pull-refresh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
+  font-weight: 700;
+  font-size: 13px;
+}
+.pull-refresh i {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #4338ca;
+  font-style: normal;
+  animation: pull-refresh-bounce 1.3s ease-in-out infinite;
+}
+@keyframes pull-refresh-bounce {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(6px) rotate(180deg); }
+}`,
+    reducedMotion: `.pull-refresh i { animation: none; }`,
+  },
 ]
