@@ -2816,4 +2816,129 @@ export const animations: AnimationItem[] = [
 @keyframes text-bounce-in { to { opacity: 1; transform: none; } }`,
     reducedMotion: `.text-bounce-in span { animation: none; opacity: 1; transform: none; }`,
   },
+
+  // 注目・バッジ
+  {
+    id: 'new-badge',
+    referenceId: 'CSS-089',
+    title: '新着バッジ',
+    description: '角に貼り付いたバッジが、小さく脈打って目を引く。',
+    category: '注目・バッジ',
+    trigger: 'ループ',
+    tags: ['バッジ', '新着', 'scale'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="new-badge-demo">お知らせ<span>NEW</span></div>`,
+    css: `.new-badge-demo { position: relative; display: inline-block; padding: 10px 18px; border-radius: 10px; background: #f1f5f9; font-weight: 700; }
+.new-badge-demo span {
+  position: absolute;
+  top: -10px;
+  right: -14px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  animation: new-badge-pop 1.8s ease-in-out infinite;
+}
+@keyframes new-badge-pop {
+  0%, 100% { transform: scale(1) rotate(-6deg); }
+  50% { transform: scale(1.15) rotate(-6deg); }
+}`,
+    reducedMotion: `.new-badge-demo span { animation: none; }`,
+  },
+  {
+    id: 'breathing-button',
+    referenceId: 'CSS-090',
+    title: '呼吸するボタン',
+    description: '外側へ広がる光の輪で、主要な行動を誘導する。',
+    category: '注目・バッジ',
+    trigger: 'ループ',
+    tags: ['ボタン', 'box-shadow', '誘導'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="breathing-button">今すぐ始める</button>`,
+    css: `.breathing-button {
+  padding: 15px 32px;
+  border: 0;
+  border-radius: 999px;
+  background: #2563eb;
+  color: white;
+  font-weight: 800;
+  animation: breathing 2.2s ease-in-out infinite;
+}
+@keyframes breathing {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(37 99 235 / 45%); }
+  50% { transform: scale(1.04); box-shadow: 0 0 0 10px rgb(37 99 235 / 0%); }
+}`,
+    reducedMotion: `.breathing-button { animation: none; }`,
+  },
+  {
+    id: 'arrow-guide',
+    referenceId: 'CSS-091',
+    title: '矢印の誘導',
+    description: '下方向への案内を、跳ねる矢印でさりげなく示す。',
+    category: '注目・バッジ',
+    trigger: 'ループ',
+    tags: ['矢印', '誘導', 'transform'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="arrow-guide">こちら<span>↓</span></div>`,
+    css: `.arrow-guide { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; color: #2563eb; font-weight: 800; font-size: 13px; }
+.arrow-guide span { font-size: 22px; animation: arrow-guide-bounce 1.2s ease-in-out infinite; }
+@keyframes arrow-guide-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}`,
+    reducedMotion: `.arrow-guide span { animation: none; }`,
+  },
+  {
+    id: 'status-dot',
+    referenceId: 'CSS-092',
+    title: 'ステータスドット',
+    description: 'オンライン状態を、じわりと広がる光の輪で示す。',
+    category: '注目・バッジ',
+    trigger: 'ループ',
+    tags: ['ステータス', 'ドット', 'box-shadow'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="status-dot">オンライン</div>`,
+    css: `.status-dot { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #166534; }
+.status-dot::before {
+  content: "";
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgb(34 197 94 / 55%);
+  animation: status-dot-pulse 1.8s infinite;
+}
+@keyframes status-dot-pulse { to { box-shadow: 0 0 0 6px rgb(34 197 94 / 0%); } }`,
+    reducedMotion: `.status-dot::before { animation: none; }`,
+  },
+  {
+    id: 'countdown-blink',
+    referenceId: 'CSS-093',
+    title: '期間限定の点滅',
+    description: '緊急性を伝える、控えめな明滅バッジ。',
+    category: '注目・バッジ',
+    trigger: 'ループ',
+    tags: ['期間限定', 'opacity', '強調'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="countdown-blink">残り3点 · 期間限定</div>`,
+    css: `.countdown-blink {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-weight: 800;
+  font-size: 13px;
+  animation: countdown-blink 1.3s ease-in-out infinite;
+}
+@keyframes countdown-blink { 50% { opacity: .45; } }`,
+    reducedMotion: `.countdown-blink { animation: none; }`,
+  },
 ]
