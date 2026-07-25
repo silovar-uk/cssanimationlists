@@ -35,7 +35,7 @@ export function AnimationCard({
   return (
     <article className="animation-card" id={item.referenceId}>
       <div className="card-preview-wrap">
-        <AnimationStage item={item} paused={paused} compact />
+        <AnimationStage item={item} paused={paused} compact observeVisibility />
         <div className="card-float-actions">
           <button
             type="button"

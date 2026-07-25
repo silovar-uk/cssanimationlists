@@ -116,7 +116,7 @@ main { overflow: hidden; }
 .sort-select { min-height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: white; white-space: nowrap; }
 .sort-select select { border: 0; outline: 0; background: transparent; font-weight: 700; }
 .animation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-.animation-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: var(--paper); box-shadow: 0 5px 0 #ddd3c4; transition: transform .24s ease, box-shadow .24s ease; scroll-margin-top: 190px; }
+.animation-card { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 26px; background: var(--paper); box-shadow: 0 5px 0 #ddd3c4; transition: transform .24s ease, box-shadow .24s ease; scroll-margin-top: 190px; content-visibility: auto; contain-intrinsic-size: auto 480px; }
 .animation-card:hover { transform: translateY(-6px) rotate(-.25deg); box-shadow: 0 12px 0 #d7ccbc; }
 .card-preview-wrap { position: relative; padding: 12px; border-bottom: 1px solid var(--line); }
 .card-float-actions { position: absolute; top: 23px; right: 23px; display: flex; gap: 7px; z-index: 2; }
