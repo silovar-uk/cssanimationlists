@@ -555,4 +555,290 @@ export const animations: AnimationItem[] = [
 }`,
     reducedMotion: `.heartbeat { animation: none; }`,
   },
+
+  // 登場・退場
+  {
+    id: 'fade-in',
+    referenceId: 'CSS-021',
+    title: 'フェードイン',
+    description: '最も基本的な、透明度だけで現れる登場。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['opacity', 'フェード', '登場'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="fade-in-box">Hello</div>`,
+    css: `.fade-in-box {
+  padding: 20px 28px;
+  border-radius: 14px;
+  background: #171717;
+  color: white;
+  font-weight: 800;
+  opacity: 0;
+  animation: fade-in .6s ease both;
+}
+@keyframes fade-in { to { opacity: 1; } }`,
+    reducedMotion: `.fade-in-box { animation: none; opacity: 1; }`,
+  },
+  {
+    id: 'slide-up-in',
+    referenceId: 'CSS-022',
+    title: 'スライドアップイン',
+    description: '下からわずかに持ち上がって現れる登場。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['transform', 'スライド', '登場'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="slide-up-in">Welcome</div>`,
+    css: `.slide-up-in {
+  padding: 20px 28px;
+  border-radius: 14px;
+  background: #2563eb;
+  color: white;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateY(28px);
+  animation: slide-up-in .6s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes slide-up-in { to { opacity: 1; transform: none; } }`,
+    reducedMotion: `.slide-up-in { animation: none; opacity: 1; transform: none; }`,
+  },
+  {
+    id: 'slide-in-left',
+    referenceId: 'CSS-023',
+    title: '左からスライドイン',
+    description: '横方向から滑り込むメニューやパネルの登場。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['transform', 'スライド', '横'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="slide-in-left">MENU</div>`,
+    css: `.slide-in-left {
+  padding: 18px 30px;
+  border-radius: 14px;
+  background: #111827;
+  color: white;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateX(-40px);
+  animation: slide-in-left .55s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes slide-in-left { to { opacity: 1; transform: none; } }`,
+    reducedMotion: `.slide-in-left { animation: none; opacity: 1; transform: none; }`,
+  },
+  {
+    id: 'scale-pop-in',
+    referenceId: 'CSS-024',
+    title: 'スケールポップイン',
+    description: '弾むように拡大して現れる、印象を強める登場。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['scale', 'ポップ', '登場'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="scale-pop-in">POP</div>`,
+    css: `.scale-pop-in {
+  width: 92px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f97316;
+  color: white;
+  font-weight: 900;
+  opacity: 0;
+  transform: scale(.4);
+  animation: scale-pop-in .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes scale-pop-in { to { opacity: 1; transform: scale(1); } }`,
+    reducedMotion: `.scale-pop-in { animation: none; opacity: 1; transform: scale(1); }`,
+  },
+  {
+    id: 'blur-in',
+    referenceId: 'CSS-025',
+    title: 'ブラーイン',
+    description: 'ピントが合うように、ぼかしから鮮明になる登場。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['filter', 'ブラー', '登場'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<p class="blur-in">Sharp focus</p>`,
+    css: `.blur-in {
+  margin: 0;
+  font: 800 24px/1.3 sans-serif;
+  opacity: 0;
+  filter: blur(14px);
+  animation: blur-in .7s ease both;
+}
+@keyframes blur-in { to { opacity: 1; filter: blur(0); } }`,
+    reducedMotion: `.blur-in { animation: none; opacity: 1; filter: none; }`,
+  },
+  {
+    id: 'clip-wipe-in',
+    referenceId: 'CSS-026',
+    title: 'ワイプ登場',
+    description: 'clip-pathで左から右へ塗りが広がるように現れる。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['clip-path', 'ワイプ', '登場'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="clip-wipe-in">REVEAL</div>`,
+    css: `.clip-wipe-in {
+  padding: 20px 30px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #7c3aed, #ec4899);
+  color: white;
+  font-weight: 900;
+  clip-path: inset(0 100% 0 0);
+  animation: clip-wipe-in .7s ease both;
+}
+@keyframes clip-wipe-in { to { clip-path: inset(0 0 0 0); } }`,
+    reducedMotion: `.clip-wipe-in { animation: none; clip-path: none; }`,
+    browserNote: 'clip-pathの補間はモダンブラウザーで広く対応済みですが、古いSafariでは挙動差が出る場合があります。',
+  },
+  {
+    id: 'stagger-grid-in',
+    referenceId: 'CSS-027',
+    title: 'グリッド時間差登場',
+    description: '格子状に並んだ要素が順番に現れる。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['delay', 'グリッド', '登場'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="stagger-grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>`,
+    css: `.stagger-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stagger-grid i {
+  width: 34px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: #16a34a;
+  opacity: 0;
+  transform: scale(.5);
+  animation: stagger-in .5s ease both;
+}
+.stagger-grid i:nth-child(1) { animation-delay: 0s; }
+.stagger-grid i:nth-child(2) { animation-delay: .08s; }
+.stagger-grid i:nth-child(3) { animation-delay: .16s; }
+.stagger-grid i:nth-child(4) { animation-delay: .24s; }
+.stagger-grid i:nth-child(5) { animation-delay: .32s; }
+.stagger-grid i:nth-child(6) { animation-delay: .4s; }
+@keyframes stagger-in { to { opacity: 1; transform: scale(1); } }`,
+    reducedMotion: `.stagger-grid i { animation: none; opacity: 1; transform: scale(1); }`,
+  },
+  {
+    id: 'modal-pop-in',
+    referenceId: 'CSS-028',
+    title: 'モーダル出現',
+    description: '背景の暗転とカードの拡大が時間差で重なる登場。',
+    category: '登場・退場',
+    trigger: '一度だけ',
+    tags: ['モーダル', 'scale', '登場'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="modal-pop-demo">
+  <div class="modal-pop-backdrop"></div>
+  <div class="modal-pop-card">保存しました</div>
+</div>`,
+    css: `.modal-pop-demo { position: relative; width: 220px; height: 140px; display: grid; place-items: center; }
+.modal-pop-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 45%);
+  opacity: 0;
+  animation: modal-backdrop-in .4s ease both;
+}
+.modal-pop-card {
+  position: relative;
+  padding: 18px 26px;
+  border-radius: 16px;
+  background: white;
+  color: #171717;
+  font-weight: 800;
+  box-shadow: 0 20px 45px rgb(0 0 0 / 30%);
+  opacity: 0;
+  transform: scale(.85) translateY(10px);
+  animation: modal-card-in .4s .1s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes modal-backdrop-in { to { opacity: 1; } }
+@keyframes modal-card-in { to { opacity: 1; transform: none; } }`,
+    reducedMotion: `.modal-pop-backdrop, .modal-pop-card { animation: none; opacity: 1; transform: none; }`,
+  },
+  {
+    id: 'toast-in-out',
+    referenceId: 'CSS-029',
+    title: 'トースト出現と自動退場',
+    description: '下から現れて数秒とどまり、上へ抜けて消える通知。',
+    category: '登場・退場',
+    trigger: 'ループ',
+    tags: ['トースト', 'delay', '通知'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="toast-demo">保存が完了しました</div>`,
+    css: `.toast-demo {
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: #111827;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  animation: toast-life 2.8s cubic-bezier(.2,.8,.2,1) infinite;
+}
+@keyframes toast-life {
+  0% { opacity: 0; transform: translateY(16px); }
+  12%, 78% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}`,
+    reducedMotion: `.toast-demo { animation: none; opacity: 1; transform: none; }`,
+    note: '実際の運用では表示後に自動で消し、再表示はJSでクラスを付け替えて行います。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'fade-out-exit',
+    referenceId: 'CSS-030',
+    title: 'フェードアウト退場',
+    description: '上へ抜けながら薄れて消える、退場側の基本形。',
+    category: '登場・退場',
+    trigger: 'ループ',
+    tags: ['opacity', 'フェード', '退場'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="fade-out-loop">閉じます</div>`,
+    css: `.fade-out-loop {
+  padding: 18px 26px;
+  border-radius: 14px;
+  background: #ef4444;
+  color: white;
+  font-weight: 800;
+  animation: fade-out-loop 2.4s ease-in-out infinite alternate;
+}
+@keyframes fade-out-loop { to { opacity: 0; transform: translateY(-14px); } }`,
+    reducedMotion: `.fade-out-loop { animation: none; }`,
+  },
+  {
+    id: 'swipe-dismiss',
+    referenceId: 'CSS-031',
+    title: 'スワイプ退場',
+    description: '横へ払われるように回転しながら消える削除表現。',
+    category: '登場・退場',
+    trigger: 'ループ',
+    tags: ['transform', 'スワイプ', '退場'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="swipe-dismiss">← スワイプで削除</div>`,
+    css: `.swipe-dismiss {
+  padding: 16px 24px;
+  border-radius: 12px;
+  background: #0f172a;
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  animation: swipe-dismiss 2.6s ease-in-out infinite alternate;
+}
+@keyframes swipe-dismiss { to { opacity: 0; transform: translateX(90px) rotate(4deg); } }`,
+    reducedMotion: `.swipe-dismiss { animation: none; }`,
+  },
 ]

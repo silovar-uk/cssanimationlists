@@ -193,6 +193,7 @@ export function AnimationModal({
                 ))}
               </div>
               {item.note && <p className="detail-note">{item.note}</p>}
+              {item.browserNote && <p className="detail-note detail-browser-note">{item.browserNote}</p>}
             </div>
           </div>
 

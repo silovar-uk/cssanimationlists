@@ -190,6 +190,8 @@ main { overflow: hidden; }
 .detail-description { margin-top: 22px; }
 .detail-description > p { color: var(--muted); line-height: 1.8; }
 .detail-note { padding: 12px 14px; border-left: 4px solid var(--yellow); background: #fff9dd; color: #5d5141 !important; font-size: 13px; }
+.detail-note + .detail-note { margin-top: 8px; }
+.detail-browser-note { border-left-color: var(--blue); background: #eaf0fe; color: #1e3a8a !important; }
 .code-panel { min-width: 0; display: flex; flex-direction: column; background: #17191f; color: #f7f7f5; }
 .code-toolbar { position: sticky; top: 92px; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 16px; border-bottom: 1px solid #353943; background: #20232b; }
 .code-tabs { display: flex; gap: 5px; }
