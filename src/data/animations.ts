@@ -1140,4 +1140,254 @@ export const animations: AnimationItem[] = [
 }`,
     reducedMotion: `.pull-refresh i { animation: none; }`,
   },
+
+  // フィードバック
+  {
+    id: 'shake-error',
+    referenceId: 'CSS-040',
+    title: 'エラー時シェイク',
+    description: '左右に小刻みに揺れて、入力の誤りを瞬時に伝える。',
+    category: 'フィードバック',
+    trigger: '一度だけ',
+    tags: ['シェイク', 'エラー', 'transform'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="shake-error">パスワードが違います</div>`,
+    css: `.shake-error {
+  padding: 12px 20px;
+  border: 2px solid #ef4444;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-weight: 700;
+  font-size: 13px;
+  animation: shake-error .5s cubic-bezier(.36,.07,.19,.97);
+}
+@keyframes shake-error {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}`,
+    reducedMotion: `.shake-error { animation: none; }`,
+  },
+  {
+    id: 'like-burst',
+    referenceId: 'CSS-041',
+    title: 'いいね押下',
+    description: '弾んで縮む、ハートアイコンの反応。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['ハート', 'いいね', 'scale'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="like-burst"><span>♥</span></button>`,
+    css: `.like-burst {
+  position: relative;
+  width: 56px;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  background: #fff0f3;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.like-burst span {
+  font-size: 26px;
+  color: #e11d48;
+  animation: like-pop 2.4s ease-in-out infinite;
+}
+@keyframes like-pop {
+  0%, 20% { transform: scale(1); }
+  35% { transform: scale(1.5); }
+  50% { transform: scale(.9); }
+  65%, 100% { transform: scale(1); }
+}`,
+    reducedMotion: `.like-burst span { animation: none; }`,
+    note: '実際は押下や状態切り替え時にのみ発火させます。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'delete-fade',
+    referenceId: 'CSS-042',
+    title: '削除時フェードアウト',
+    description: '縮みながら消え、リストの高さも一緒に畳まれる。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['削除', 'opacity', 'リスト'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="delete-fade">タスクを完了しました</div>`,
+    css: `.delete-fade {
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 700;
+  font-size: 13px;
+  overflow: hidden;
+  animation: delete-fade 2.6s ease-in infinite;
+}
+@keyframes delete-fade {
+  0%, 55% { opacity: 1; transform: scale(1); max-height: 60px; }
+  85% { opacity: 0; transform: scale(.9); max-height: 60px; }
+  100% { opacity: 0; transform: scale(.9); max-height: 0; padding-block: 0; }
+}`,
+    reducedMotion: `.delete-fade { animation: none; }`,
+  },
+  {
+    id: 'input-error-flash',
+    referenceId: 'CSS-043',
+    title: '入力エラーの枠線点滅',
+    description: '外側へ広がって消えるリングで、入力欄の異常を知らせる。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['フォーム', 'エラー', 'box-shadow'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<input class="input-error-flash" value="invalid@" readonly />`,
+    css: `.input-error-flash {
+  padding: 12px 14px;
+  border: 2px solid #ef4444;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  animation: input-error-flash 1.6s ease-in-out infinite;
+}
+@keyframes input-error-flash {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(239 68 68 / 45%); }
+  50% { box-shadow: 0 0 0 6px rgb(239 68 68 / 0%); }
+}`,
+    reducedMotion: `.input-error-flash { animation: none; }`,
+  },
+  {
+    id: 'copied-tooltip',
+    referenceId: 'CSS-044',
+    title: 'コピー完了の吹き出し',
+    description: 'ボタン上に一瞬だけ現れて消える、完了の合図。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['吹き出し', 'コピー', 'opacity'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="copied-tooltip-demo"><button>コピー</button><span>コピーしました</span></div>`,
+    css: `.copied-tooltip-demo { position: relative; display: inline-block; }
+.copied-tooltip-demo button {
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  font-weight: 700;
+}
+.copied-tooltip-demo span {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(6px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #16a34a;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  animation: copied-tooltip 2.2s ease-in-out infinite;
+}
+@keyframes copied-tooltip {
+  0%, 100% { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  15%, 70% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}`,
+    reducedMotion: `.copied-tooltip-demo span { animation: none; opacity: 1; transform: translateX(-50%) translateY(0); }`,
+  },
+  {
+    id: 'success-banner',
+    referenceId: 'CSS-045',
+    title: '保存完了バナー',
+    description: '上から降りて数秒とどまり、また上へ消えるバナー。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['成功', 'バナー', 'transform'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="success-banner">✓ すべての変更を保存しました</div>`,
+    css: `.success-banner {
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 800;
+  font-size: 13px;
+  animation: success-banner 2.6s cubic-bezier(.2,.8,.2,1) infinite;
+}
+@keyframes success-banner {
+  0% { opacity: 0; transform: translateY(-14px); }
+  15%, 80% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-14px); }
+}`,
+    reducedMotion: `.success-banner { animation: none; opacity: 1; transform: none; }`,
+  },
+  {
+    id: 'warning-wobble',
+    referenceId: 'CSS-046',
+    title: '警告アイコンの揺れ',
+    description: '注意を促す、左右非対称の小さな揺れ。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['警告', 'アイコン', 'rotate'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="warning-wobble">⚠</div>`,
+    css: `.warning-wobble {
+  width: 64px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 30px;
+  animation: warning-wobble 1.8s ease-in-out infinite;
+}
+@keyframes warning-wobble {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-6deg); }
+  80% { transform: rotate(4deg); }
+}`,
+    reducedMotion: `.warning-wobble { animation: none; }`,
+  },
+  {
+    id: 'star-rating',
+    referenceId: 'CSS-047',
+    title: 'スターレーティング選択',
+    description: '星が左から順に色付いていく、評価入力の演出。',
+    category: 'フィードバック',
+    trigger: 'ループ',
+    tags: ['評価', '星', 'scale'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="star-rating"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>`,
+    css: `.star-rating { display: flex; gap: 4px; }
+.star-rating i {
+  font-size: 30px;
+  color: #e5e7eb;
+  font-style: normal;
+  animation: star-fill 2.4s ease infinite;
+}
+.star-rating i:nth-child(1) { animation-delay: 0s; }
+.star-rating i:nth-child(2) { animation-delay: .12s; }
+.star-rating i:nth-child(3) { animation-delay: .24s; }
+.star-rating i:nth-child(4) { animation-delay: .36s; }
+.star-rating i:nth-child(5) { animation-delay: .48s; }
+@keyframes star-fill {
+  0%, 8% { color: #e5e7eb; transform: scale(1); }
+  16% { color: #facc15; transform: scale(1.35); }
+  24%, 100% { color: #facc15; transform: scale(1); }
+}`,
+    reducedMotion: `.star-rating i { animation: none; color: #facc15; }`,
+    note: '全体をループ再生していますが、実際は選択した数だけ星が色付いた状態を保持します。',
+  },
 ]
