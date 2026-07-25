@@ -2941,4 +2941,115 @@ export const animations: AnimationItem[] = [
 @keyframes countdown-blink { 50% { opacity: .45; } }`,
     reducedMotion: `.countdown-blink { animation: none; }`,
   },
+
+  // 背景・装飾
+  {
+    id: 'aurora-glow',
+    referenceId: 'CSS-094',
+    title: 'オーロラ背景',
+    description: '複数の光の塊が、ゆっくりとにじみながら漂う。',
+    category: '背景・装飾',
+    trigger: 'ループ',
+    tags: ['オーロラ', 'filter', '背景'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="aurora-glow"></div>`,
+    css: `.aurora-glow {
+  position: relative;
+  width: 220px;
+  height: 140px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.aurora-glow::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 30% 30%, rgb(124 58 237 / 70%), transparent 45%),
+    radial-gradient(circle at 70% 60%, rgb(6 182 212 / 60%), transparent 45%),
+    radial-gradient(circle at 40% 80%, rgb(236 72 153 / 55%), transparent 45%);
+  filter: blur(20px);
+  animation: aurora-drift 8s ease-in-out infinite;
+}
+@keyframes aurora-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(6%, -4%) rotate(8deg); }
+}`,
+    reducedMotion: `.aurora-glow::before { animation: none; }`,
+  },
+  {
+    id: 'scan-line-grid',
+    referenceId: 'CSS-095',
+    title: 'グリッド走査線',
+    description: '方眼の背景を、光の帯が上から下へ走査する。',
+    category: '背景・装飾',
+    trigger: 'ループ',
+    tags: ['グリッド', '走査線', 'SF'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="scan-line-grid"></div>`,
+    css: `.scan-line-grid {
+  position: relative;
+  width: 220px;
+  height: 140px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #0b1220;
+  background-image:
+    linear-gradient(rgb(56 189 248 / 18%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(56 189 248 / 18%) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.scan-line-grid::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -40px;
+  height: 40px;
+  background: linear-gradient(rgb(56 189 248 / 0%), rgb(56 189 248 / 55%), rgb(56 189 248 / 0%));
+  animation: scan-line-move 2.6s linear infinite;
+}
+@keyframes scan-line-move { to { top: 140px; } }`,
+    reducedMotion: `.scan-line-grid::after { animation: none; }`,
+  },
+  {
+    id: 'particle-float',
+    referenceId: 'CSS-096',
+    title: 'パーティクル浮遊',
+    description: '小さな粒が下から生まれ、消えながら立ち昇る。',
+    category: '背景・装飾',
+    trigger: 'ループ',
+    tags: ['パーティクル', 'transform', '背景'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="particle-float"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>`,
+    css: `.particle-float { position: relative; width: 220px; height: 140px; overflow: hidden; border-radius: 16px; background: linear-gradient(160deg, #1e293b, #0f172a); }
+.particle-float i {
+  position: absolute;
+  bottom: -10px;
+  width: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 70%);
+  animation: particle-rise 5s linear infinite;
+}
+.particle-float i:nth-child(1) { left: 8%; animation-delay: 0s; }
+.particle-float i:nth-child(2) { left: 20%; animation-delay: -1s; }
+.particle-float i:nth-child(3) { left: 32%; animation-delay: -2.4s; }
+.particle-float i:nth-child(4) { left: 44%; animation-delay: -.6s; }
+.particle-float i:nth-child(5) { left: 58%; animation-delay: -3.2s; }
+.particle-float i:nth-child(6) { left: 70%; animation-delay: -1.8s; }
+.particle-float i:nth-child(7) { left: 82%; animation-delay: -4s; }
+.particle-float i:nth-child(8) { left: 92%; animation-delay: -2.5s; }
+@keyframes particle-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: .4; }
+  100% { transform: translateY(-160px) scale(.4); opacity: 0; }
+}`,
+    reducedMotion: `.particle-float i { animation: none; opacity: 0; }`,
+  },
 ]
