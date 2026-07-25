@@ -238,9 +238,9 @@ export const animations: AnimationItem[] = [
     id: 'jelly-button',
     referenceId: 'CSS-009',
     title: 'ジェリーボタン',
-    description: '押したあと、やわらかく戻るボタン。',
+    description: '押している間だけ、やわらかく弾むボタン。',
     category: 'ボタン・リンク',
-    trigger: 'ループ',
+    trigger: '状態変化',
     tags: ['ボタン', 'scale', '反応'],
     difficulty: 'ふつう',
     cost: '軽い',
@@ -252,7 +252,9 @@ export const animations: AnimationItem[] = [
   background: #111827;
   color: white;
   font-weight: 800;
-  animation: jelly 1.8s infinite;
+}
+.jelly-button:active {
+  animation: jelly .6s;
 }
 
 @keyframes jelly {
@@ -261,16 +263,16 @@ export const animations: AnimationItem[] = [
   60% { transform: scale(1.04, .96); }
   75% { transform: scale(.99, 1.01); }
 }`,
-    reducedMotion: `.jelly-button { animation: none; }`,
-    note: '常時ループ再生の実演です。クリック時のみ動かす場合は animation を :active に付け替えてください。',
+    reducedMotion: `.jelly-button:active { animation: none; }`,
+    note: 'カードやプレビューではマウスを押し続けている間だけ動きます。クリックして確認してください。',
   },
   {
     id: 'ripple-button',
     referenceId: 'CSS-010',
     title: 'リップルボタン',
-    description: 'クリック位置から波紋が広がる印象。',
+    description: '押している間、中心から波紋が広がるボタン。',
     category: 'ボタン・リンク',
-    trigger: 'ループ',
+    trigger: '状態変化',
     tags: ['ボタン', '波紋', '疑似要素'],
     difficulty: 'ふつう',
     cost: '軽い',
@@ -293,11 +295,13 @@ export const animations: AnimationItem[] = [
   border-radius: 50%;
   background: #fff8;
   transform: translate(-50%, -50%) scale(0);
-  animation: ripple 1.6s infinite;
+}
+.ripple-button:active::after {
+  animation: ripple .6s ease-out;
 }
 @keyframes ripple { to { transform: translate(-50%, -50%) scale(8); opacity: 0; } }`,
-    reducedMotion: `.ripple-button::after { animation: none; }`,
-    note: '常時ループ再生の実演です。クリック時のみ動かす場合は animation を :active に付け替えてください。',
+    reducedMotion: `.ripple-button:active::after { animation: none; }`,
+    note: 'カードやプレビューではマウスを押し続けている間だけ動きます。クリックして確認してください。',
   },
   {
     id: 'loader-bars',
@@ -1389,5 +1393,311 @@ export const animations: AnimationItem[] = [
 }`,
     reducedMotion: `.star-rating i { animation: none; color: #facc15; }`,
     note: '全体をループ再生していますが、実際は選択した数だけ星が色付いた状態を保持します。',
+  },
+
+  // ボタン・リンク
+  {
+    id: 'underline-grow',
+    referenceId: 'CSS-048',
+    title: 'ホバー下線伸長',
+    description: 'ホバーすると左から下線が伸びるテキストリンク。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['リンク', '下線', 'transition'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<a class="underline-grow" href="#">詳しく見る</a>`,
+    css: `.underline-grow {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  color: #111827;
+  font-weight: 800;
+  text-decoration: none;
+}
+.underline-grow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #2563eb;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.underline-grow:hover::after { transform: scaleX(1); }`,
+    reducedMotion: `.underline-grow::after { transition: none; }`,
+    note: 'マウスをホバーすると動きを確認できます。',
+  },
+  {
+    id: 'bg-slide',
+    referenceId: 'CSS-049',
+    title: '背景スライドボタン',
+    description: 'ホバーで背景が下から染み出すように反転する。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['ボタン', '背景', 'transition'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<button class="bg-slide">送信する</button>`,
+    css: `.bg-slide {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 30px;
+  border: 2px solid #111827;
+  border-radius: 999px;
+  background: white;
+  color: #111827;
+  font-weight: 800;
+  z-index: 0;
+}
+.bg-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #111827;
+  transform: translateX(-100%);
+  transition: transform .3s ease;
+  z-index: -1;
+}
+.bg-slide:hover { color: white; }
+.bg-slide:hover::before { transform: translateX(0); }`,
+    reducedMotion: `.bg-slide::before { transition: none; }`,
+    note: 'マウスをホバーすると動きを確認できます。',
+  },
+  {
+    id: 'icon-shift',
+    referenceId: 'CSS-050',
+    title: 'アイコン移動ボタン',
+    description: 'ホバーで矢印アイコンだけがすっと右へ動く。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['アイコン', 'ボタン', 'transition'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="icon-shift">次へ <span>→</span></button>`,
+    css: `.icon-shift {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #2563eb;
+  color: white;
+  font-weight: 800;
+}
+.icon-shift span { display: inline-block; transition: transform .25s ease; }
+.icon-shift:hover span { transform: translateX(6px); }`,
+    reducedMotion: `.icon-shift span { transition: none; }`,
+    note: 'マウスをホバーすると動きを確認できます。',
+  },
+  {
+    id: 'border-draw',
+    referenceId: 'CSS-051',
+    title: 'ボーダー描画ボタン',
+    description: 'ホバーで対角から輪郭線が伸びて枠を描く。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['ボーダー', '疑似要素', 'transition'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<button class="border-draw">詳細</button>`,
+    css: `.border-draw {
+  position: relative;
+  padding: 13px 26px;
+  border: 0;
+  background: transparent;
+  color: #111827;
+  font-weight: 800;
+  font-size: 14px;
+}
+.border-draw::before, .border-draw::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 2px solid #111827;
+  transition: width .25s ease, height .25s ease .25s;
+}
+.border-draw::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.border-draw::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+.border-draw:hover::before, .border-draw:hover::after { width: 100%; height: 100%; }`,
+    reducedMotion: `.border-draw::before, .border-draw::after { transition: none; }`,
+    note: 'マウスをホバーすると動きを確認できます。',
+  },
+  {
+    id: 'press-sink',
+    referenceId: 'CSS-052',
+    title: '押下時の沈み込み',
+    description: '立体的な影が、押している間だけ潰れる操作感。',
+    category: 'ボタン・リンク',
+    trigger: '状態変化',
+    tags: ['ボタン', '押下', 'box-shadow'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="press-sink">確定する</button>`,
+    css: `.press-sink {
+  padding: 14px 30px;
+  border: 0;
+  border-radius: 12px;
+  background: #16a34a;
+  color: white;
+  font-weight: 800;
+  box-shadow: 0 6px 0 #15803d;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.press-sink:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #15803d;
+}`,
+    reducedMotion: `.press-sink { transition: none; }`,
+    note: 'マウスを押し続けている間だけ動きます。クリックして確認してください。',
+  },
+  {
+    id: 'gradient-border',
+    referenceId: 'CSS-053',
+    title: 'グラデーション境界',
+    description: '@propertyで枠のグラデーションを回転させる特別感の演出。',
+    category: 'ボタン・リンク',
+    trigger: 'ループ',
+    tags: ['@property', 'グラデーション', '境界'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<button class="gradient-border">プレミアム</button>`,
+    css: `@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.gradient-border {
+  position: relative;
+  padding: 13px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: #111827;
+  color: white;
+  font-weight: 800;
+  z-index: 0;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), #7c3aed, #ec4899, #f97316, #7c3aed);
+  animation: gradient-border-spin 3s linear infinite;
+}
+@keyframes gradient-border-spin { to { --angle: 360deg; } }`,
+    reducedMotion: `.gradient-border::before { animation: none; }`,
+    browserNote: '@property が必要です(Safari 16.4以降)。未対応環境では枠のグラデーションが回転せず固定表示になります。',
+  },
+  {
+    id: 'magnetic-hover',
+    referenceId: 'CSS-054',
+    title: '磁石風ホバー',
+    description: '吸い寄せられるように拡大浮遊するホバー反応。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['ホバー', 'scale', 'transition'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="magnetic-hover">HOVER ME</button>`,
+    css: `.magnetic-hover {
+  padding: 16px 32px;
+  border: 0;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-weight: 800;
+  transition: transform .25s cubic-bezier(.2,.9,.3,1.2);
+}
+.magnetic-hover:hover { transform: scale(1.08) translateY(-3px); }`,
+    reducedMotion: `.magnetic-hover { transition: none; }`,
+    note: '本来の磁石風(マウス位置に追従する動き)にはJavaScriptでポインター座標を取得する実装が必要です。ここではCSSのみで再現できる範囲の反応を実演しています。',
+  },
+  {
+    id: 'disabled-transition',
+    referenceId: 'CSS-055',
+    title: '無効化状態への遷移',
+    description: '送信可能から送信不可へ切り替わる、状態変化の表現。',
+    category: 'ボタン・リンク',
+    trigger: 'ループ',
+    tags: ['状態', '無効化', 'opacity'],
+    difficulty: 'かんたん',
+    cost: '注意',
+    html: `<button class="disabled-transition">送信する</button>`,
+    css: `.disabled-transition {
+  padding: 14px 30px;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 800;
+  color: white;
+  animation: disabled-transition 2.6s ease-in-out infinite;
+}
+@keyframes disabled-transition {
+  0%, 40% { background: #2563eb; opacity: 1; }
+  55%, 100% { background: #94a3b8; opacity: .7; }
+}`,
+    reducedMotion: `.disabled-transition { animation: none; }`,
+    note: '実際は送信中などの条件でdisabled属性とスタイルをJavaScriptで切り替えます。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'shadow-lift',
+    referenceId: 'CSS-056',
+    title: '影の持ち上げ',
+    description: 'ホバーで浮き上がり、影が広がるカード全体の反応。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['カード', '影', 'transition'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="shadow-lift">カード全体がホバー対象です</div>`,
+    css: `.shadow-lift {
+  padding: 22px 26px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  font-weight: 700;
+  color: #334155;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.shadow-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px rgb(0 0 0 / 15%);
+}`,
+    reducedMotion: `.shadow-lift { transition: none; }`,
+    note: 'マウスをホバーすると動きを確認できます。',
+  },
+  {
+    id: 'outline-fill',
+    referenceId: 'CSS-057',
+    title: 'アウトラインの塗りつぶし',
+    description: 'ホバーで輪郭ボタンの内側が左から塗りつぶされる。',
+    category: 'ボタン・リンク',
+    trigger: 'ホバー',
+    tags: ['ボタン', '塗りつぶし', 'background'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<button class="outline-fill">登録する</button>`,
+    css: `.outline-fill {
+  padding: 13px 30px;
+  border: 2px solid #16a34a;
+  border-radius: 999px;
+  background: linear-gradient(#16a34a, #16a34a) no-repeat left / 0% 100%;
+  color: #16a34a;
+  font-weight: 800;
+  transition: background-size .3s ease, color .3s ease;
+}
+.outline-fill:hover {
+  background-size: 100% 100%;
+  color: white;
+}`,
+    reducedMotion: `.outline-fill { transition: none; }`,
+    note: 'マウスをホバーすると動きを確認できます。',
   },
 ]
