@@ -1700,4 +1700,402 @@ export const animations: AnimationItem[] = [
     reducedMotion: `.outline-fill { transition: none; }`,
     note: 'マウスをホバーすると動きを確認できます。',
   },
+
+  // フォーム入力
+  {
+    id: 'floating-label',
+    referenceId: 'CSS-058',
+    title: 'フローティングラベル',
+    description: '入力にフォーカスすると、ラベルが上へ小さく移動する。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['フォーム', 'ラベル', 'focus'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<label class="floating-label"><input type="text" placeholder=" " /><span>メールアドレス</span></label>`,
+    css: `.floating-label { position: relative; display: inline-block; }
+.floating-label input {
+  width: 220px;
+  padding: 18px 14px 8px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color .2s ease;
+}
+.floating-label input:focus { border-color: #2563eb; }
+.floating-label span {
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  color: #64748b;
+  font-size: 15px;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform .2s ease, color .2s ease;
+}
+.floating-label input:focus + span,
+.floating-label input:not(:placeholder-shown) + span {
+  transform: translateY(-11px) scale(.8);
+  color: #2563eb;
+}`,
+    reducedMotion: `.floating-label input, .floating-label span { transition: none; }`,
+    note: '入力欄をクリック(フォーカス)すると、ラベルが上へ移動します。',
+  },
+  {
+    id: 'focus-ring-grow',
+    referenceId: 'CSS-059',
+    title: 'フォーカス時の枠線拡大',
+    description: 'フォーカスした入力欄の周囲に、輪郭が広がる。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['フォーム', 'focus', 'box-shadow'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<input class="focus-ring-grow" placeholder="お名前" />`,
+    css: `.focus-ring-grow {
+  padding: 13px 16px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 0 0 0 0 rgb(37 99 235 / 25%);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.focus-ring-grow:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 5px rgb(37 99 235 / 25%);
+}`,
+    reducedMotion: `.focus-ring-grow { transition: none; }`,
+    note: '入力欄をクリック(フォーカス)すると輪郭が広がります。',
+  },
+  {
+    id: 'checkbox-draw',
+    referenceId: 'CSS-060',
+    title: 'チェックボックス描画',
+    description: 'チェックすると、四角の中にチェックマークが現れる。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['チェックボックス', 'フォーム', '状態'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<label class="checkbox-draw"><input type="checkbox" /><span></span>利用規約に同意する</label>`,
+    css: `.checkbox-draw { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; }
+.checkbox-draw input { position: absolute; opacity: 0; width: 0; height: 0; }
+.checkbox-draw span {
+  position: relative;
+  width: 24px;
+  aspect-ratio: 1;
+  border: 2px solid #94a3b8;
+  border-radius: 6px;
+  transition: background .2s ease, border-color .2s ease;
+}
+.checkbox-draw span::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border-right: 2.5px solid white;
+  border-bottom: 2.5px solid white;
+  transform: rotate(45deg) scale(0);
+  transition: transform .2s ease .05s;
+}
+.checkbox-draw input:checked + span { background: #2563eb; border-color: #2563eb; }
+.checkbox-draw input:checked + span::after { transform: rotate(45deg) scale(1); }`,
+    reducedMotion: `.checkbox-draw span, .checkbox-draw span::after { transition: none; }`,
+    note: 'クリックしてチェック状態を切り替えられます。',
+  },
+  {
+    id: 'toggle-switch',
+    referenceId: 'CSS-061',
+    title: 'トグルスイッチ',
+    description: 'つまみが滑るように移動する、ON/OFFの切り替え。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['トグル', 'スイッチ', 'フォーム'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<label class="toggle-switch"><input type="checkbox" checked /><span></span></label>`,
+    css: `.toggle-switch { display: inline-block; }
+.toggle-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.toggle-switch span {
+  display: block;
+  width: 52px;
+  height: 30px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  transition: background .25s ease;
+}
+.toggle-switch span::after {
+  content: "";
+  display: block;
+  width: 24px;
+  aspect-ratio: 1;
+  margin: 3px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1);
+}
+.toggle-switch input:checked + span { background: #16a34a; }
+.toggle-switch input:checked + span::after { transform: translateX(22px); }`,
+    reducedMotion: `.toggle-switch span, .toggle-switch span::after { transition: none; }`,
+    note: 'クリックしてON/OFFを切り替えられます。',
+  },
+  {
+    id: 'radio-select',
+    referenceId: 'CSS-062',
+    title: 'ラジオ選択',
+    description: '選んだ側の中心に、丸がふわりと現れる。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['ラジオ', 'フォーム', '状態'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="radio-select">
+  <label><input type="radio" name="plan-css062" checked /><span></span>ライト</label>
+  <label><input type="radio" name="plan-css062" /><span></span>プロ</label>
+</div>`,
+    css: `.radio-select { display: flex; gap: 18px; font-weight: 700; }
+.radio-select label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.radio-select input { position: absolute; opacity: 0; width: 0; height: 0; }
+.radio-select span {
+  position: relative;
+  width: 20px;
+  aspect-ratio: 1;
+  border: 2px solid #94a3b8;
+  border-radius: 50%;
+  transition: border-color .2s ease;
+}
+.radio-select span::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #2563eb;
+  transform: scale(0);
+  transition: transform .2s cubic-bezier(.2,.8,.2,1.4);
+}
+.radio-select input:checked + span { border-color: #2563eb; }
+.radio-select input:checked + span::after { transform: scale(1); }`,
+    reducedMotion: `.radio-select span, .radio-select span::after { transition: none; }`,
+    note: 'クリックして選択を切り替えられます。',
+  },
+  {
+    id: 'search-expand',
+    referenceId: 'CSS-063',
+    title: '検索欄の展開',
+    description: 'フォーカスすると、アイコンだけの入力欄が横に広がる。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['検索', 'フォーム', 'focus'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="search-expand"><input type="search" placeholder="検索" /><span>🔍</span></div>`,
+    css: `.search-expand { display: inline-flex; align-items: center; }
+.search-expand input {
+  width: 40px;
+  padding: 12px 14px;
+  border: 2px solid #cbd5e1;
+  border-radius: 999px;
+  outline: none;
+  font-size: 14px;
+  transition: width .3s cubic-bezier(.2,.8,.2,1);
+}
+.search-expand input:focus { width: 200px; border-color: #2563eb; }
+.search-expand span { margin-left: -34px; pointer-events: none; }`,
+    reducedMotion: `.search-expand input { transition: none; }`,
+    note: '入力欄をクリック(フォーカス)すると横に広がります。',
+  },
+  {
+    id: 'char-counter',
+    referenceId: 'CSS-064',
+    title: '文字数カウンターの色変化',
+    description: '上限に近づくにつれ、数字の色が段階的に変わる。',
+    category: 'フォーム入力',
+    trigger: 'ループ',
+    tags: ['文字数', 'フォーム', '色'],
+    difficulty: 'かんたん',
+    cost: '注意',
+    html: `<div class="char-counter"><span>128</span> / 140</div>`,
+    css: `.char-counter {
+  font: 700 14px/1 monospace;
+  animation: char-counter-color 3s ease-in-out infinite;
+}
+@keyframes char-counter-color {
+  0%, 20% { color: #16a34a; }
+  55% { color: #d97706; }
+  85%, 100% { color: #dc2626; }
+}`,
+    reducedMotion: `.char-counter { animation: none; }`,
+    note: '実際は入力文字数に応じてJavaScriptで色やテキストを更新します。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'password-strength',
+    referenceId: 'CSS-065',
+    title: 'パスワード強度バー',
+    description: '入力の強さに応じて、色付くバーの本数が増える。',
+    category: 'フォーム入力',
+    trigger: 'ループ',
+    tags: ['パスワード', '強度', 'フォーム'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="password-strength"><i></i><i></i><i></i><i></i></div>`,
+    css: `.password-strength { display: flex; gap: 6px; }
+.password-strength i {
+  width: 34px;
+  height: 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  animation: password-strength 2.6s ease-in-out infinite;
+}
+.password-strength i:nth-child(1) { animation-delay: 0s; }
+.password-strength i:nth-child(2) { animation-delay: .15s; }
+.password-strength i:nth-child(3) { animation-delay: .3s; }
+.password-strength i:nth-child(4) { animation-delay: .45s; }
+@keyframes password-strength {
+  0%, 15% { background: #e5e7eb; }
+  30%, 100% { background: #16a34a; }
+}`,
+    reducedMotion: `.password-strength i { animation: none; }`,
+    note: '実際は入力内容の強度判定に応じて色付く本数をJavaScriptで制御します。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'submit-transition',
+    referenceId: 'CSS-066',
+    title: '送信中の状態遷移',
+    description: 'ボタンのラベルとスピナーが入れ替わりで表示される。',
+    category: 'フォーム入力',
+    trigger: 'ループ',
+    tags: ['送信', '状態', 'ボタン'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<button class="submit-transition"><span class="label">送信する</span><span class="spinner"><i></i></span></button>`,
+    css: `.submit-transition {
+  position: relative;
+  width: 150px;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: #2563eb;
+  color: white;
+  font-weight: 800;
+}
+.submit-transition .label, .submit-transition .spinner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.submit-transition .label { animation: submit-crossfade 3s ease-in-out infinite; }
+.submit-transition .spinner { animation: submit-crossfade-reverse 3s ease-in-out infinite; }
+.submit-transition .spinner i {
+  width: 18px;
+  aspect-ratio: 1;
+  border: 2.5px solid rgb(255 255 255 / 35%);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: submit-spin .6s linear infinite;
+}
+@keyframes submit-crossfade { 0%, 40% { opacity: 1; } 50%, 75% { opacity: 0; } 85%, 100% { opacity: 1; } }
+@keyframes submit-crossfade-reverse { 0%, 40% { opacity: 0; } 50%, 75% { opacity: 1; } 85%, 100% { opacity: 0; } }
+@keyframes submit-spin { to { transform: rotate(1turn); } }`,
+    reducedMotion: `.submit-transition .label, .submit-transition .spinner, .submit-transition .spinner i { animation: none; } .submit-transition .spinner { opacity: 0; }`,
+    note: '実際は送信開始・完了のタイミングでクラスをJavaScriptから切り替えます。ここでは一連の流れを常時ループ再生しています。',
+  },
+  {
+    id: 'select-arrow-rotate',
+    referenceId: 'CSS-067',
+    title: 'セレクト矢印の回転',
+    description: 'フォーカスすると、開閉を示す矢印が反転する。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['セレクト', '矢印', 'focus'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<label class="select-arrow-rotate"><select><option>並び替え: 新着順</option><option>人気順</option></select><span>▾</span></label>`,
+    css: `.select-arrow-rotate { position: relative; display: inline-block; }
+.select-arrow-rotate select {
+  appearance: none;
+  padding: 12px 40px 12px 16px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  background: white;
+}
+.select-arrow-rotate span {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  color: #64748b;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: transform .2s ease;
+}
+.select-arrow-rotate select:focus + span { transform: translateY(-50%) rotate(180deg); }`,
+    reducedMotion: `.select-arrow-rotate span { transition: none; }`,
+    note: 'クリック(フォーカス)すると矢印が回転します。',
+  },
+  {
+    id: 'dropzone-highlight',
+    referenceId: 'CSS-068',
+    title: 'ドロップゾーンの誘導',
+    description: 'ドラッグ&ドロップの受け皿であることを、脈打つ枠線で示す。',
+    category: 'フォーム入力',
+    trigger: 'ループ',
+    tags: ['ドラッグ&ドロップ', 'フォーム', 'border'],
+    difficulty: 'かんたん',
+    cost: '注意',
+    html: `<div class="dropzone-highlight">ここにファイルをドロップ</div>`,
+    css: `.dropzone-highlight {
+  width: 220px;
+  padding: 34px 16px;
+  border: 2px dashed #94a3b8;
+  border-radius: 14px;
+  text-align: center;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 13px;
+  animation: dropzone-pulse 2s ease-in-out infinite;
+}
+@keyframes dropzone-pulse {
+  0%, 100% { border-color: #94a3b8; background: transparent; }
+  50% { border-color: #2563eb; background: #eff6ff; }
+}`,
+    reducedMotion: `.dropzone-highlight { animation: none; }`,
+    note: '実際はdragoverイベントでクラスを切り替えます。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'slider-thumb-grow',
+    referenceId: 'CSS-069',
+    title: 'スライダーのつまみ操作感',
+    description: '押している間、つまみが大きくなって操作対象を強調する。',
+    category: 'フォーム入力',
+    trigger: '状態変化',
+    tags: ['スライダー', 'つまみ', 'transition'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="slider-thumb-grow"><div class="track"><i class="fill"></i><i class="thumb"></i></div></div>`,
+    css: `.slider-thumb-grow { width: 220px; padding: 14px 0; cursor: pointer; }
+.slider-thumb-grow .track { position: relative; height: 4px; border-radius: 999px; background: #e2e8f0; }
+.slider-thumb-grow .fill { position: absolute; inset: 0; width: 62%; border-radius: 999px; background: #2563eb; }
+.slider-thumb-grow .thumb {
+  position: absolute;
+  left: 62%;
+  top: 50%;
+  width: 18px;
+  aspect-ratio: 1;
+  margin-left: -9px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 0 4px white, 0 2px 6px rgb(0 0 0 / 25%);
+  transform: translateY(-50%) scale(1);
+  transition: transform .15s ease;
+}
+.slider-thumb-grow:active .thumb { transform: translateY(-50%) scale(1.5); }`,
+    reducedMotion: `.slider-thumb-grow .thumb { transition: none; }`,
+    note: '見た目の実演用に簡略化した非機能スライダーです。実際のフォームでは input type="range" を使用してください。クリックして押下時の反応を確認できます。',
+  },
 ]
