@@ -110,6 +110,9 @@ main { overflow: hidden; }
 .category-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 .category-chips button { min-height: 36px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: white; cursor: pointer; font-size: 13px; font-weight: 700; }
 .category-chips button:hover, .category-chips button.is-active { border-color: var(--ink); background: var(--yellow); }
+.trigger-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.trigger-chips button { min-height: 32px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: 12px; font-weight: 700; color: var(--muted); }
+.trigger-chips button:hover, .trigger-chips button.is-active { border-color: var(--blue); background: #eaf0fe; color: var(--blue); }
 .sort-select { min-height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: white; white-space: nowrap; }
 .sort-select select { border: 0; outline: 0; background: transparent; font-weight: 700; }
 .animation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }

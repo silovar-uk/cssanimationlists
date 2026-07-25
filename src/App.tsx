@@ -12,17 +12,30 @@ import {
 import { AnimationCard } from './components/AnimationCard'
 import { AnimationModal } from './components/AnimationModal'
 import { animations } from './data/animations'
-import type { AnimationCategory, AnimationItem, Difficulty } from './types'
+import type { AnimationCategory, Difficulty, Trigger } from './types'
 
 const FAVORITES_KEY = 'css-motion-favorites'
 const categories: Array<'すべて' | AnimationCategory> = [
   'すべて',
   '登場・退場',
-  '強調・反応',
-  'ローディング',
-  '文字',
+  'ローディング・進捗',
+  'フィードバック',
+  'ボタン・リンク',
+  'フォーム入力',
+  'ナビゲーション・開閉',
+  '文字・テキスト',
+  '注目・バッジ',
   '背景・装飾',
-  'UIパーツ',
+  'スクロール連動',
+]
+
+const triggers: Array<'すべて' | Trigger> = [
+  'すべて',
+  'ループ',
+  '一度だけ',
+  'ホバー',
+  '状態変化',
+  'スクロール',
 ]
 
 const difficultyRank: Record<Difficulty, number> = {
@@ -36,6 +49,7 @@ type SortMode = 'おすすめ' | '名前順' | '難易度順'
 export default function App() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<(typeof categories)[number]>('すべて')
+  const [trigger, setTrigger] = useState<(typeof triggers)[number]>('すべて')
   const [sortMode, setSortMode] = useState<SortMode>('おすすめ')
   const [favoriteOnly, setFavoriteOnly] = useState(false)
   const [favorites, setFavorites] = useState<Set<string>>(() => {
@@ -85,19 +99,21 @@ export default function App() {
     const normalizedQuery = query.trim().toLowerCase()
     const filtered = animations.filter((item) => {
       const matchesCategory = category === 'すべて' || item.category === category
+      const matchesTrigger = trigger === 'すべて' || item.trigger === trigger
       const matchesFavorite = !favoriteOnly || favorites.has(item.id)
       const searchableText = [
         item.referenceId,
         item.title,
         item.description,
         item.category,
+        item.trigger,
         item.difficulty,
         ...item.tags,
       ]
         .join(' ')
         .toLowerCase()
       const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery)
-      return matchesCategory && matchesFavorite && matchesQuery
+      return matchesCategory && matchesTrigger && matchesFavorite && matchesQuery
     })
 
     if (sortMode === '名前順') {
@@ -109,7 +125,7 @@ export default function App() {
       )
     }
     return filtered
-  }, [category, favoriteOnly, favorites, query, sortMode])
+  }, [category, trigger, favoriteOnly, favorites, query, sortMode])
 
   const selectedItem = useMemo(
     () => animations.find((item) => item.id === selectedId) ?? null,
@@ -174,6 +190,7 @@ export default function App() {
   function clearFilters() {
     setQuery('')
     setCategory('すべて')
+    setTrigger('すべて')
     setFavoriteOnly(false)
     setSortMode('おすすめ')
   }
@@ -294,6 +311,19 @@ export default function App() {
                   <option>難易度順</option>
                 </select>
               </label>
+            </div>
+
+            <div className="trigger-chips" aria-label="トリガーで絞り込む">
+              {triggers.map((value) => (
+                <button
+                  type="button"
+                  key={value}
+                  className={trigger === value ? 'is-active' : ''}
+                  onClick={() => setTrigger(value)}
+                >
+                  {value}
+                </button>
+              ))}
             </div>
           </div>
 

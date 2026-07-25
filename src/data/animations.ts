@@ -6,9 +6,11 @@ export const animations: AnimationItem[] = [
     referenceId: 'CSS-001',
     title: 'バウンドボール',
     description: '重さを感じる、基本の跳ねる動き。',
-    category: '強調・反応',
+    category: '背景・装飾',
+    trigger: 'ループ',
     tags: ['ループ', 'transform', 'ボール'],
     difficulty: 'かんたん',
+    cost: '軽い',
     preview: 'bounce-ball',
     html: `<div class="bounce-ball"></div>`,
     css: `.bounce-ball {
@@ -24,15 +26,18 @@ export const animations: AnimationItem[] = [
     transform: translateY(-80px) scale(1.04, .96);
   }
 }`,
+    reducedMotion: `.bounce-ball { animation: none; }`,
   },
   {
     id: 'pulse-ring',
     referenceId: 'CSS-002',
     title: 'パルスリング',
     description: '注目位置を静かに知らせる波紋。',
-    category: '強調・反応',
+    category: '注目・バッジ',
+    trigger: 'ループ',
     tags: ['ループ', 'scale', '通知'],
     difficulty: 'かんたん',
+    cost: '軽い',
     preview: 'pulse-ring',
     html: `<span class="pulse-dot"></span>`,
     css: `.pulse-dot {
@@ -55,15 +60,18 @@ export const animations: AnimationItem[] = [
 @keyframes pulse {
   to { transform: scale(3); opacity: 0; }
 }`,
+    reducedMotion: `.pulse-dot::after { animation: none; }`,
   },
   {
     id: 'orbit-dots',
     referenceId: 'CSS-003',
     title: 'オービットドット',
     description: '3つの点が中心のまわりを巡る。',
-    category: 'ローディング',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
     tags: ['ループ', '回転', 'ドット'],
     difficulty: 'ふつう',
+    cost: '軽い',
     preview: 'orbit-dots',
     html: `<div class="orbit"><i></i><i></i><i></i></div>`,
     css: `.orbit {
@@ -88,6 +96,7 @@ export const animations: AnimationItem[] = [
 .orbit i:nth-child(3) { transform: rotate(240deg) translateY(-38px); }
 
 @keyframes orbit { to { transform: rotate(1turn); } }`,
+    reducedMotion: `.orbit { animation: none; }`,
   },
   {
     id: 'floating-card',
@@ -95,8 +104,10 @@ export const animations: AnimationItem[] = [
     title: 'フローティングカード',
     description: 'カードが呼吸するように浮かぶ。',
     category: '背景・装飾',
+    trigger: 'ループ',
     tags: ['ループ', 'カード', '影'],
     difficulty: 'かんたん',
+    cost: '軽い',
     preview: 'floating-card',
     html: `<article class="floating-card">HELLO</article>`,
     css: `.floating-card {
@@ -110,15 +121,18 @@ export const animations: AnimationItem[] = [
 @keyframes float {
   to { transform: translateY(-16px) rotate(1.5deg); }
 }`,
+    reducedMotion: `.floating-card { animation: none; }`,
   },
   {
     id: 'typing-text',
     referenceId: 'CSS-005',
     title: 'タイピングテキスト',
     description: '一文字ずつ入力される定番表現。',
-    category: '文字',
+    category: '文字・テキスト',
+    trigger: 'ループ',
     tags: ['steps', '文字', 'カーソル'],
     difficulty: 'ふつう',
+    cost: '注意',
     preview: 'typing-text',
     html: `<p class="typing">CSS makes motion.</p>`,
     css: `.typing {
@@ -134,15 +148,18 @@ export const animations: AnimationItem[] = [
 
 @keyframes typing { from { width: 0; } }
 @keyframes caret { 50% { border-color: transparent; } }`,
+    reducedMotion: `.typing { animation: none; }`,
   },
   {
     id: 'shimmer-text',
     referenceId: 'CSS-006',
     title: 'シマーテキスト',
     description: '光が文字の上を横切る。',
-    category: '文字',
+    category: '文字・テキスト',
+    trigger: 'ループ',
     tags: ['グラデーション', '文字', 'ループ'],
     difficulty: 'かんたん',
+    cost: '注意',
     preview: 'shimmer-text',
     html: `<strong class="shimmer">SHIMMER</strong>`,
     css: `.shimmer {
@@ -155,6 +172,7 @@ export const animations: AnimationItem[] = [
 }
 
 @keyframes shimmer { to { background-position: -250% 0; } }`,
+    reducedMotion: `.shimmer { animation: none; background: none; -webkit-text-fill-color: initial; color: #171717; }`,
   },
   {
     id: 'reveal-lines',
@@ -162,8 +180,10 @@ export const animations: AnimationItem[] = [
     title: 'ラインリビール',
     description: '複数行が時間差で滑り込む。',
     category: '登場・退場',
+    trigger: '一度だけ',
     tags: ['delay', '文章', '登場'],
     difficulty: 'ふつう',
+    cost: '軽い',
     preview: 'reveal-lines',
     html: `<div class="reveal-lines">
   <span>Make it clear.</span>
@@ -182,15 +202,18 @@ export const animations: AnimationItem[] = [
 @keyframes reveal {
   to { opacity: 1; transform: none; }
 }`,
+    reducedMotion: `.reveal-lines span { animation: none; opacity: 1; transform: none; }`,
   },
   {
     id: 'flip-card',
     referenceId: 'CSS-008',
     title: 'フリップカード',
     description: '表裏をくるりと切り替える。',
-    category: 'UIパーツ',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ループ',
     tags: ['3D', 'カード', 'hover'],
     difficulty: 'しっかり',
+    cost: '軽い',
     preview: 'flip-card',
     html: `<div class="flip-card">
   <div class="flip-inner">
@@ -216,15 +239,19 @@ export const animations: AnimationItem[] = [
 }
 .flip-back { transform: rotateY(180deg); }
 @keyframes flip { 50%, 100% { transform: rotateY(180deg); } }`,
+    reducedMotion: `.flip-inner { animation: none; }`,
+    note: '常時ループ再生の実演です。ホバーで切り替える実装にする場合は animation を :hover { transform: rotateY(180deg); } に置き換えてください。',
   },
   {
     id: 'jelly-button',
     referenceId: 'CSS-009',
     title: 'ジェリーボタン',
     description: '押したあと、やわらかく戻るボタン。',
-    category: 'UIパーツ',
+    category: 'ボタン・リンク',
+    trigger: 'ループ',
     tags: ['ボタン', 'scale', '反応'],
     difficulty: 'ふつう',
+    cost: '軽い',
     preview: 'jelly-button',
     html: `<button class="jelly-button">CLICK</button>`,
     css: `.jelly-button {
@@ -243,15 +270,19 @@ export const animations: AnimationItem[] = [
   60% { transform: scale(1.04, .96); }
   75% { transform: scale(.99, 1.01); }
 }`,
+    reducedMotion: `.jelly-button { animation: none; }`,
+    note: '常時ループ再生の実演です。クリック時のみ動かす場合は animation を :active に付け替えてください。',
   },
   {
     id: 'ripple-button',
     referenceId: 'CSS-010',
     title: 'リップルボタン',
     description: 'クリック位置から波紋が広がる印象。',
-    category: 'UIパーツ',
+    category: 'ボタン・リンク',
+    trigger: 'ループ',
     tags: ['ボタン', '波紋', '疑似要素'],
     difficulty: 'ふつう',
+    cost: '軽い',
     preview: 'ripple-button',
     html: `<button class="ripple-button">SEND</button>`,
     css: `.ripple-button {
@@ -275,15 +306,19 @@ export const animations: AnimationItem[] = [
   animation: ripple 1.6s infinite;
 }
 @keyframes ripple { to { transform: translate(-50%, -50%) scale(8); opacity: 0; } }`,
+    reducedMotion: `.ripple-button::after { animation: none; }`,
+    note: '常時ループ再生の実演です。クリック時のみ動かす場合は animation を :active に付け替えてください。',
   },
   {
     id: 'loader-bars',
     referenceId: 'CSS-011',
     title: 'ローダーバー',
     description: '高さの違うバーがリズムよく動く。',
-    category: 'ローディング',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
     tags: ['ローダー', 'delay', 'バー'],
     difficulty: 'かんたん',
+    cost: '注意',
     preview: 'loader-bars',
     html: `<div class="loader-bars"><i></i><i></i><i></i><i></i><i></i></div>`,
     css: `.loader-bars { display: flex; gap: 7px; align-items: center; height: 70px; }
@@ -299,15 +334,18 @@ export const animations: AnimationItem[] = [
 .loader-bars i:nth-child(4) { animation-delay: .3s; }
 .loader-bars i:nth-child(5) { animation-delay: .4s; }
 @keyframes bars { to { height: 64px; } }`,
+    reducedMotion: `.loader-bars i { animation: none; }`,
   },
   {
     id: 'spinner',
     referenceId: 'CSS-012',
     title: 'スピナー',
     description: '端が追いかける、軽量な読み込み表示。',
-    category: 'ローディング',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
     tags: ['回転', 'border', 'ローダー'],
     difficulty: 'かんたん',
+    cost: '軽い',
     preview: 'spinner',
     html: `<div class="spinner"></div>`,
     css: `.spinner {
@@ -319,6 +357,7 @@ export const animations: AnimationItem[] = [
   animation: spin .8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(1turn); } }`,
+    reducedMotion: `.spinner { animation: none; }`,
   },
   {
     id: 'gradient-wave',
@@ -326,8 +365,10 @@ export const animations: AnimationItem[] = [
     title: 'グラデーションウェーブ',
     description: '背景色がゆっくり流れ続ける。',
     category: '背景・装飾',
+    trigger: 'ループ',
     tags: ['背景', 'グラデーション', 'ループ'],
     difficulty: 'かんたん',
+    cost: '注意',
     preview: 'gradient-wave',
     html: `<div class="gradient-wave"></div>`,
     css: `.gradient-wave {
@@ -342,15 +383,18 @@ export const animations: AnimationItem[] = [
   0%, 100% { background-position: 0 50%; }
   50% { background-position: 100% 50%; }
 }`,
+    reducedMotion: `.gradient-wave { animation: none; }`,
   },
   {
     id: 'confetti',
     referenceId: 'CSS-014',
     title: 'コンフェッティ',
     description: '小さな紙片が降り注ぐ祝福表現。',
-    category: '背景・装飾',
+    category: 'フィードバック',
+    trigger: '一度だけ',
     tags: ['紙吹雪', 'delay', '祝福'],
     difficulty: 'しっかり',
+    cost: '軽い',
     preview: 'confetti',
     html: `<div class="confetti"><i></i><i></i><i></i><i></i><i></i><i></i></div>`,
     css: `.confetti { position: relative; width: 180px; height: 120px; overflow: hidden; }
@@ -367,15 +411,18 @@ export const animations: AnimationItem[] = [
 @keyframes fall {
   to { transform: translate(30px, 160px) rotate(500deg); }
 }`,
+    reducedMotion: `.confetti i { animation: none; }`,
   },
   {
     id: 'notification-bell',
     referenceId: 'CSS-015',
     title: '通知ベル',
     description: '新着を知らせる小さな揺れ。',
-    category: '強調・反応',
+    category: '注目・バッジ',
+    trigger: 'ループ',
     tags: ['通知', '回転', 'アイコン'],
     difficulty: 'ふつう',
+    cost: '軽い',
     preview: 'notification-bell',
     html: `<div class="bell">🔔<b>3</b></div>`,
     css: `.bell {
@@ -394,15 +441,18 @@ export const animations: AnimationItem[] = [
   font: 700 12px sans-serif;
 }
 @keyframes ring { 10%, 30% { transform: rotate(14deg); } 20%, 40% { transform: rotate(-14deg); } }`,
+    reducedMotion: `.bell { animation: none; }`,
   },
   {
     id: 'skeleton',
     referenceId: 'CSS-016',
     title: 'スケルトンローダー',
     description: 'コンテンツ読み込み前のプレースホルダー。',
-    category: 'ローディング',
+    category: 'ローディング・進捗',
+    trigger: 'ループ',
     tags: ['UI', 'グラデーション', '読み込み'],
     difficulty: 'ふつう',
+    cost: '注意',
     preview: 'skeleton',
     html: `<div class="skeleton"><i></i><span></span><span></span></div>`,
     css: `.skeleton > * {
@@ -415,15 +465,18 @@ export const animations: AnimationItem[] = [
 .skeleton i { width: 54px; height: 54px; border-radius: 50%; }
 .skeleton span { width: 150px; height: 13px; margin-top: 12px; }
 @keyframes skeleton { to { background-position: -200% 0; } }`,
+    reducedMotion: `.skeleton > * { animation: none; }`,
   },
   {
     id: 'marquee',
     referenceId: 'CSS-017',
     title: '無限マーキー',
     description: '文字列が途切れず横へ流れる。',
-    category: '文字',
+    category: '背景・装飾',
+    trigger: 'ループ',
     tags: ['文字', 'ループ', '横移動'],
     difficulty: 'ふつう',
+    cost: '軽い',
     preview: 'marquee',
     html: `<div class="marquee"><div>CSS MOTION · CSS MOTION · CSS MOTION ·</div></div>`,
     css: `.marquee {
@@ -439,6 +492,7 @@ export const animations: AnimationItem[] = [
   animation: marquee 5s linear infinite;
 }
 @keyframes marquee { to { transform: translateX(-33.33%); } }`,
+    reducedMotion: `.marquee div { animation: none; }`,
   },
   {
     id: 'blob',
@@ -446,8 +500,10 @@ export const animations: AnimationItem[] = [
     title: 'モーフィングブロブ',
     description: '輪郭がゆっくり変形する有機的な形。',
     category: '背景・装飾',
+    trigger: 'ループ',
     tags: ['border-radius', '変形', '背景'],
     difficulty: 'ふつう',
+    cost: '注意',
     preview: 'blob',
     html: `<div class="blob"></div>`,
     css: `.blob {
@@ -460,15 +516,18 @@ export const animations: AnimationItem[] = [
   0% { border-radius: 42% 58% 65% 35% / 35% 45% 55% 65%; }
   100% { border-radius: 60% 40% 36% 64% / 62% 34% 66% 38%; transform: rotate(18deg); }
 }`,
+    reducedMotion: `.blob { animation: none; border-radius: 42% 58% 65% 35% / 35% 45% 55% 65%; }`,
   },
   {
     id: 'checkbox',
     referenceId: 'CSS-019',
     title: 'チェック完了',
     description: '線が描かれて完了を伝える。',
-    category: 'UIパーツ',
+    category: 'フィードバック',
+    trigger: '一度だけ',
     tags: ['SVG風', '完了', '線'],
     difficulty: 'しっかり',
+    cost: '軽い',
     preview: 'checkbox',
     html: `<div class="checkmark"><span></span></div>`,
     css: `.checkmark {
@@ -490,15 +549,18 @@ export const animations: AnimationItem[] = [
 }
 @keyframes check-pop { from { transform: scale(0); } }
 @keyframes check-draw { to { transform: rotate(-45deg) scale(1); } }`,
+    reducedMotion: `.checkmark { animation: none; } .checkmark span { animation: none; transform: rotate(-45deg) scale(1); }`,
   },
   {
     id: 'heartbeat',
     referenceId: 'CSS-020',
     title: 'ハートビート',
     description: '二拍で鼓動するような強調。',
-    category: '強調・反応',
+    category: '注目・バッジ',
+    trigger: 'ループ',
     tags: ['scale', 'アイコン', 'ループ'],
     difficulty: 'かんたん',
+    cost: '軽い',
     preview: 'heartbeat',
     html: `<div class="heartbeat">♥</div>`,
     css: `.heartbeat {
@@ -511,5 +573,6 @@ export const animations: AnimationItem[] = [
   14%, 42% { transform: scale(1.22); }
   28%, 70% { transform: scale(1); }
 }`,
+    reducedMotion: `.heartbeat { animation: none; }`,
   },
 ]
