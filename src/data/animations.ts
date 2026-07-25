@@ -201,9 +201,9 @@ export const animations: AnimationItem[] = [
     id: 'flip-card',
     referenceId: 'CSS-008',
     title: 'フリップカード',
-    description: '表裏をくるりと切り替える。',
+    description: 'ホバーすると、表裏をくるりと切り替える。',
     category: 'ナビゲーション・開閉',
-    trigger: 'ループ',
+    trigger: 'ホバー',
     tags: ['3D', 'カード', 'hover'],
     difficulty: 'しっかり',
     cost: '軽い',
@@ -219,8 +219,9 @@ export const animations: AnimationItem[] = [
   height: 100px;
   position: relative;
   transform-style: preserve-3d;
-  animation: flip 2.8s ease-in-out infinite;
+  transition: transform .6s ease;
 }
+.flip-card:hover .flip-inner { transform: rotateY(180deg); }
 .flip-front, .flip-back {
   position: absolute;
   inset: 0;
@@ -229,10 +230,9 @@ export const animations: AnimationItem[] = [
   backface-visibility: hidden;
   border-radius: 18px;
 }
-.flip-back { transform: rotateY(180deg); }
-@keyframes flip { 50%, 100% { transform: rotateY(180deg); } }`,
-    reducedMotion: `.flip-inner { animation: none; }`,
-    note: '常時ループ再生の実演です。ホバーで切り替える実装にする場合は animation を :hover { transform: rotateY(180deg); } に置き換えてください。',
+.flip-back { transform: rotateY(180deg); }`,
+    reducedMotion: `.flip-inner { transition: none; }`,
+    note: 'マウスをホバーすると裏面に切り替わります。',
   },
   {
     id: 'jelly-button',
@@ -2097,5 +2097,487 @@ export const animations: AnimationItem[] = [
 .slider-thumb-grow:active .thumb { transform: translateY(-50%) scale(1.5); }`,
     reducedMotion: `.slider-thumb-grow .thumb { transition: none; }`,
     note: '見た目の実演用に簡略化した非機能スライダーです。実際のフォームでは input type="range" を使用してください。クリックして押下時の反応を確認できます。',
+  },
+
+  // ナビゲーション・開閉
+  {
+    id: 'hamburger-morph',
+    referenceId: 'CSS-070',
+    title: 'ハンバーガー変形',
+    description: '3本線がバツ印へ滑らかに変形するメニューボタン。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: ['ハンバーガー', 'メニュー', 'transform'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<button class="hamburger-morph" aria-label="メニュー"><span></span><span></span><span></span></button>`,
+    css: `.hamburger-morph {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: #111827;
+  cursor: pointer;
+}
+.hamburger-morph span {
+  position: absolute;
+  left: 11px;
+  width: 22px;
+  height: 2.5px;
+  background: white;
+  border-radius: 2px;
+  transition: transform .3s ease, opacity .2s ease, top .3s ease;
+}
+.hamburger-morph span:nth-child(1) { top: 15px; }
+.hamburger-morph span:nth-child(2) { top: 21px; }
+.hamburger-morph span:nth-child(3) { top: 27px; }
+.hamburger-morph:hover span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+.hamburger-morph:hover span:nth-child(2) { opacity: 0; }
+.hamburger-morph:hover span:nth-child(3) { top: 21px; transform: rotate(-45deg); }`,
+    reducedMotion: `.hamburger-morph span { transition: none; }`,
+    note: '実際にはクリックでの開閉が一般的です。ここではCSSのみで実演するため:hoverで代用しています。',
+  },
+  {
+    id: 'drawer-slide',
+    referenceId: 'CSS-071',
+    title: 'ドロワー',
+    description: '横から滑り出て、また収納されるメニューパネル。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ループ',
+    tags: ['ドロワー', 'transform', 'メニュー'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="drawer-slide-demo"><div class="drawer-panel">メニュー項目</div></div>`,
+    css: `.drawer-slide-demo { width: 220px; height: 140px; overflow: hidden; position: relative; background: #f1f5f9; border-radius: 12px; }
+.drawer-panel {
+  position: absolute;
+  inset: 0;
+  width: 160px;
+  padding: 16px;
+  background: #111827;
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  animation: drawer-slide 3s ease-in-out infinite;
+}
+@keyframes drawer-slide {
+  0%, 15% { transform: translateX(-100%); }
+  40%, 75% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}`,
+    reducedMotion: `.drawer-panel { animation: none; }`,
+    note: '実際は開閉ボタンのクリックでクラスを切り替えます。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'accordion-expand',
+    referenceId: 'CSS-072',
+    title: 'アコーディオン',
+    description: 'クリックすると、内容の高さがなめらかに広がる。',
+    category: 'ナビゲーション・開閉',
+    trigger: '状態変化',
+    tags: ['アコーディオン', 'grid', '状態'],
+    difficulty: 'しっかり',
+    cost: '注意',
+    html: `<div class="accordion-expand">
+  <input type="checkbox" id="acc-css072" />
+  <label for="acc-css072" class="acc-head">よくある質問を開く</label>
+  <div class="acc-body"><p>ここに回答テキストが入ります。高さがなめらかに広がります。</p></div>
+</div>`,
+    css: `.accordion-expand { width: 240px; }
+.accordion-expand input { position: absolute; opacity: 0; width: 0; height: 0; }
+.acc-head {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  font-weight: 700;
+  cursor: pointer;
+}
+.acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .3s ease;
+}
+.acc-body p { min-height: 0; overflow: hidden; margin: 0; padding: 0 16px; }
+.accordion-expand input:checked ~ .acc-body { grid-template-rows: 1fr; }
+.accordion-expand input:checked ~ .acc-body p { padding-top: 12px; padding-bottom: 12px; }`,
+    reducedMotion: `.acc-body { transition: none; }`,
+    note: 'クリックして開閉を確認できます。',
+    browserNote: 'grid-template-rowsのfr値アニメーションはモダンブラウザーで対応していますが、Safariの一部バージョンでは滑らかに変化しない場合があります。',
+  },
+  {
+    id: 'dropdown-menu',
+    referenceId: 'CSS-073',
+    title: 'ドロップダウン',
+    description: 'ホバーで、ふわりと拡大しながら選択肢が現れる。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: ['ドロップダウン', 'メニュー', 'opacity'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="dropdown-menu">
+  <button>アカウント ▾</button>
+  <ul>
+    <li>プロフィール</li>
+    <li>設定</li>
+    <li>ログアウト</li>
+  </ul>
+</div>`,
+    css: `.dropdown-menu { position: relative; display: inline-block; }
+.dropdown-menu button {
+  padding: 12px 20px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.dropdown-menu ul {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  width: 160px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 15px 35px rgb(0 0 0 / 18%);
+  opacity: 0;
+  transform: translateY(-6px) scale(.97);
+  transform-origin: top left;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.dropdown-menu:hover ul, .dropdown-menu:focus-within ul {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.dropdown-menu li { padding: 10px 12px; border-radius: 6px; font-size: 13px; }
+.dropdown-menu li:hover { background: #f1f5f9; }`,
+    reducedMotion: `.dropdown-menu ul { transition: none; }`,
+    note: 'マウスをホバーすると開きます。',
+  },
+  {
+    id: 'tooltip-pop',
+    referenceId: 'CSS-074',
+    title: 'ツールチップ',
+    description: 'ホバーした要素の上に、ふわっと吹き出しが現れる。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: ['ツールチップ', 'ホバー', 'opacity'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<div class="tooltip-pop"><button>?</button><span>クリックで詳細をコピー</span></div>`,
+    css: `.tooltip-pop { position: relative; display: inline-block; }
+.tooltip-pop button {
+  width: 32px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+.tooltip-pop span {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px) scale(.92);
+  transform-origin: bottom center;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.tooltip-pop:hover span {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}`,
+    reducedMotion: `.tooltip-pop span { transition: none; }`,
+    note: 'マウスをホバーすると表示されます。',
+  },
+  {
+    id: 'tab-underline-follow',
+    referenceId: 'CSS-075',
+    title: 'タブ下線の追従',
+    description: 'ホバーしたタブの位置へ、下線がすっと移動する。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: [':has()', 'タブ', 'transition'],
+    difficulty: 'しっかり',
+    cost: '軽い',
+    html: `<div class="tab-underline-follow">
+  <button class="is-active">概要</button>
+  <button>仕様</button>
+  <button>レビュー</button>
+</div>`,
+    css: `.tab-underline-follow {
+  position: relative;
+  display: flex;
+  width: 270px;
+  border-bottom: 2px solid #e5e7eb;
+}
+.tab-underline-follow button {
+  flex: 1;
+  padding: 12px 0;
+  border: 0;
+  background: transparent;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+}
+.tab-underline-follow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 33.333%;
+  height: 2px;
+  background: #2563eb;
+  transition: transform .25s ease;
+}
+.tab-underline-follow:has(button:nth-child(2):hover)::after { transform: translateX(100%); }
+.tab-underline-follow:has(button:nth-child(3):hover)::after { transform: translateX(200%); }`,
+    reducedMotion: `.tab-underline-follow::after { transition: none; }`,
+    note: '各タブにマウスをホバーすると下線が移動します。',
+    browserNote: ':has()を使用しています。Firefox 121未満など古いブラウザーでは下線が追従しません。',
+  },
+  {
+    id: 'modal-blur-backdrop',
+    referenceId: 'CSS-076',
+    title: 'モーダル背景ぼかし',
+    description: '背景がぼやけて沈み、カードだけが手前に浮かぶ。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ループ',
+    tags: ['モーダル', 'backdrop-filter', 'opacity'],
+    difficulty: 'ふつう',
+    cost: '注意',
+    html: `<div class="modal-blur-demo">
+  <div class="blur-content">背景コンテンツ</div>
+  <div class="blur-backdrop"></div>
+  <div class="blur-card">確認してください</div>
+</div>`,
+    css: `.modal-blur-demo { position: relative; width: 240px; height: 150px; border-radius: 14px; overflow: hidden; background: #e2e8f0; }
+.blur-content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #475569;
+  font-weight: 700;
+}
+.blur-backdrop {
+  position: absolute;
+  inset: 0;
+  animation: modal-blur 3s ease-in-out infinite;
+}
+.blur-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: white;
+  font-weight: 800;
+  box-shadow: 0 20px 40px rgb(0 0 0 / 20%);
+  animation: modal-card-pop 3s ease-in-out infinite;
+}
+@keyframes modal-blur {
+  0%, 15% { backdrop-filter: blur(0px); background: rgb(255 255 255 / 0%); }
+  35%, 80% { backdrop-filter: blur(6px); background: rgb(255 255 255 / 35%); }
+  100% { backdrop-filter: blur(0px); background: rgb(255 255 255 / 0%); }
+}
+@keyframes modal-card-pop {
+  0%, 15% { opacity: 0; transform: translate(-50%, -50%) scale(.9); }
+  35%, 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(.9); }
+}`,
+    reducedMotion: `.blur-backdrop, .blur-card { animation: none; }`,
+    note: '実際は開閉のタイミングでクラスを切り替えます。ここでは動きを常時確認できるようループ再生しています。',
+    browserNote: 'backdrop-filterは主要ブラウザーで対応済みですが、対応環境でも描画コストが高めです。多用は避けてください。',
+  },
+  {
+    id: 'step-transition',
+    referenceId: 'CSS-077',
+    title: 'ステップ遷移',
+    description: '現在のステップが左へ抜け、次のステップが右から入る。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ループ',
+    tags: ['ステップ', 'transform', 'ウィザード'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="step-transition">
+  <div class="step-page">STEP 1: お届け先</div>
+  <div class="step-page">STEP 2: お支払い</div>
+</div>`,
+    css: `.step-transition { position: relative; width: 220px; height: 70px; overflow: hidden; }
+.step-page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-weight: 800;
+  font-size: 13px;
+  animation: step-transition 3.2s ease-in-out infinite;
+}
+.step-page:nth-child(2) {
+  background: #ecfdf5;
+  color: #047857;
+  animation-name: step-transition-2;
+}
+@keyframes step-transition {
+  0%, 40% { transform: translateX(0); opacity: 1; }
+  50%, 90% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes step-transition-2 {
+  0%, 40% { transform: translateX(100%); opacity: 0; }
+  50%, 90% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}`,
+    reducedMotion: `.step-page { animation: none; } .step-page:nth-child(2) { transform: translateX(100%); opacity: 0; }`,
+    note: '実際は「次へ」ボタンのクリックで遷移します。ここでは動きを常時確認できるようループ再生しています。',
+  },
+  {
+    id: 'sidebar-collapse',
+    referenceId: 'CSS-078',
+    title: 'サイドバー折りたたみ矢印',
+    description: 'ホバーで矢印が半回転し、折りたたみ方向を示す。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: ['サイドバー', '矢印', 'transition'],
+    difficulty: 'かんたん',
+    cost: '軽い',
+    html: `<button class="sidebar-collapse"><span>◂</span>折りたたむ</button>`,
+    css: `.sidebar-collapse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sidebar-collapse span { display: inline-block; transition: transform .25s ease; }
+.sidebar-collapse:hover span { transform: rotate(180deg); }`,
+    reducedMotion: `.sidebar-collapse span { transition: none; }`,
+    note: 'マウスをホバーすると矢印が反転します。',
+  },
+  {
+    id: 'pagination-slide',
+    referenceId: 'CSS-079',
+    title: 'ページネーションの追従',
+    description: 'ホバーしたページ番号へ、選択の丸背景が移動する。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: [':has()', 'ページネーション', 'transform'],
+    difficulty: 'しっかり',
+    cost: '軽い',
+    html: `<div class="pagination-slide">
+  <button>1</button>
+  <button>2</button>
+  <button>3</button>
+</div>`,
+    css: `.pagination-slide { position: relative; display: inline-flex; padding: 4px; border-radius: 999px; background: #f1f5f9; }
+.pagination-slide button {
+  position: relative;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pagination-slide::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #2563eb;
+  opacity: 0;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), opacity .2s ease;
+}
+.pagination-slide button:hover { color: white; }
+.pagination-slide:has(button:hover)::before { opacity: 1; }
+.pagination-slide:has(button:nth-child(1):hover)::before { transform: translateX(0); }
+.pagination-slide:has(button:nth-child(2):hover)::before { transform: translateX(38px); }
+.pagination-slide:has(button:nth-child(3):hover)::before { transform: translateX(76px); }`,
+    reducedMotion: `.pagination-slide::before { transition: none; }`,
+    note: '各ページ番号にマウスをホバーすると、選択インジケーターが移動します。',
+    browserNote: ':has()を使用しています。Firefox 121未満など古いブラウザーでは反応しません。',
+  },
+  {
+    id: 'context-menu-expand',
+    referenceId: 'CSS-080',
+    title: 'コンテキストメニューの展開',
+    description: 'ホバーで、右上を起点に拡大しながら選択肢が開く。',
+    category: 'ナビゲーション・開閉',
+    trigger: 'ホバー',
+    tags: ['コンテキストメニュー', 'opacity', 'scale'],
+    difficulty: 'ふつう',
+    cost: '軽い',
+    html: `<div class="context-menu-expand">
+  <button>⋮</button>
+  <ul>
+    <li>編集</li>
+    <li>複製</li>
+    <li>削除</li>
+  </ul>
+</div>`,
+    css: `.context-menu-expand { position: relative; display: inline-block; }
+.context-menu-expand button {
+  width: 36px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-weight: 900;
+  cursor: pointer;
+}
+.context-menu-expand ul {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  width: 130px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 15px 30px rgb(0 0 0 / 18%);
+  transform-origin: top right;
+  transform: scale(.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .16s ease, opacity .16s ease;
+}
+.context-menu-expand:hover ul, .context-menu-expand:focus-within ul {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+.context-menu-expand li { padding: 9px 10px; border-radius: 6px; font-size: 13px; }
+.context-menu-expand li:hover { background: #f1f5f9; }`,
+    reducedMotion: `.context-menu-expand ul { transition: none; }`,
+    note: 'マウスをホバーすると開きます。',
   },
 ]
