@@ -11,6 +11,7 @@ import {
   RefreshCw,
   X,
 } from 'lucide-react'
+import { getUsageGuidance } from '../data/usageGuidance'
 import type { AnimationItem } from '../types'
 import { AnimationStage } from './AnimationStage'
 
@@ -45,6 +46,7 @@ export function AnimationModal({
   const [copied, setCopied] = useState(false)
   const [referenceCopied, setReferenceCopied] = useState(false)
   const [replayKey, setReplayKey] = useState(0)
+  const { useCases, avoidCases } = getUsageGuidance(item)
 
   useEffect(() => {
     setPaused(false)
@@ -191,6 +193,24 @@ export function AnimationModal({
                 {item.tags.map((tag) => (
                   <span key={tag}>#{tag}</span>
                 ))}
+              </div>
+              <div className="usage-guidance">
+                <section className="usage-block usage-fit" aria-labelledby={`${item.id}-fit-title`}>
+                  <h3 id={`${item.id}-fit-title`}><span aria-hidden="true">◎</span>向いている場面</h3>
+                  <ul>
+                    {useCases.map((useCase) => (
+                      <li key={useCase}>{useCase}</li>
+                    ))}
+                  </ul>
+                </section>
+                <section className="usage-block usage-avoid" aria-labelledby={`${item.id}-avoid-title`}>
+                  <h3 id={`${item.id}-avoid-title`}><span aria-hidden="true">△</span>向いていない場面</h3>
+                  <ul>
+                    {avoidCases.map((avoidCase) => (
+                      <li key={avoidCase}>{avoidCase}</li>
+                    ))}
+                  </ul>
+                </section>
               </div>
               {item.note && <p className="detail-note">{item.note}</p>}
               {item.browserNote && <p className="detail-note detail-browser-note">{item.browserNote}</p>}
