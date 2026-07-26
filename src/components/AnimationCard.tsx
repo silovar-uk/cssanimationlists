@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Check, Code2, Heart, Maximize2, Pause, Play } from 'lucide-react'
+import { getUsageGuidance } from '../data/usageGuidance'
 import type { AnimationItem } from '../types'
 import { AnimationStage } from './AnimationStage'
 
@@ -21,6 +22,7 @@ export function AnimationCard({
   onOpen,
 }: AnimationCardProps) {
   const [referenceCopied, setReferenceCopied] = useState(false)
+  const { useCases } = getUsageGuidance(item)
 
   async function copyReference() {
     try {
@@ -72,6 +74,10 @@ export function AnimationCard({
         </div>
         <h2>{item.title}</h2>
         <p>{item.description}</p>
+        <div className="card-use-case">
+          <strong><span aria-hidden="true">◎</span>向いている場面</strong>
+          <p>{useCases[0]}</p>
+        </div>
         <div className="tag-list" aria-label="タグ">
           {item.tags.map((tag) => (
             <span key={tag}>#{tag}</span>

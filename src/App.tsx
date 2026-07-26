@@ -12,9 +12,12 @@ import {
 import { AnimationCard } from './components/AnimationCard'
 import { AnimationModal } from './components/AnimationModal'
 import { animations } from './data/animations'
+import { getUsageGuidance } from './data/usageGuidance'
 import type { AnimationCategory, Difficulty, Trigger } from './types'
+import './usage-guidance.css'
 
 const FAVORITES_KEY = 'css-motion-favorites'
+
 const categories: Array<'すべて' | AnimationCategory> = [
   'すべて',
   '登場・退場',
@@ -91,7 +94,11 @@ export default function App() {
     if (!item) return
     const nextHash = `#${item.referenceId}`
     if (window.location.hash !== nextHash) {
-      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${nextHash}`)
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}${nextHash}`,
+      )
     }
   }, [selectedId])
 
@@ -101,6 +108,7 @@ export default function App() {
       const matchesCategory = category === 'すべて' || item.category === category
       const matchesTrigger = trigger === 'すべて' || item.trigger === trigger
       const matchesFavorite = !favoriteOnly || favorites.has(item.id)
+      const guidance = getUsageGuidance(item)
       const searchableText = [
         item.referenceId,
         item.title,
@@ -109,6 +117,8 @@ export default function App() {
         item.trigger,
         item.difficulty,
         ...item.tags,
+        ...guidance.useCases,
+        ...guidance.avoidCases,
       ]
         .join(' ')
         .toLowerCase()
@@ -276,7 +286,7 @@ export default function App() {
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="ID・名前・タグ・用途で検索"
+                placeholder="名前・使いたい場面・タグで検索"
                 aria-label="アニメーションを検索"
               />
               {query && (
