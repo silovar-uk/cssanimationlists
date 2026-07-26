@@ -72,12 +72,18 @@ export function AnimationModal({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      const target = event.target as HTMLElement
+      const isFormControl = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)
+      if (isFormControl) return
+
       if (event.key === 'ArrowLeft') onPrevious()
       if (event.key === 'ArrowRight') onNext()
       if (event.key === ' ') {
-        const target = event.target as HTMLElement
-        if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return
         event.preventDefault()
         setPaused((value) => !value)
       }
