@@ -75,7 +75,7 @@ export function AnimationCard({
         <h2>{item.title}</h2>
         <p>{item.description}</p>
         <div className="card-use-case">
-          <strong><span aria-hidden="true">◎</span>向いている場面</strong>
+          <span>BEST FOR</span>
           <p>{useCases[0]}</p>
         </div>
         <div className="tag-list" aria-label="タグ">
@@ -84,9 +84,9 @@ export function AnimationCard({
           ))}
         </div>
         <button type="button" className="card-open-button" onClick={onOpen}>
-          <Code2 size={17} />
-          コードを見る
-          <Maximize2 size={15} />
+          <Maximize2 size={17} />
+          詳しく見る
+          <Code2 size={15} />
         </button>
       </div>
     </article>
